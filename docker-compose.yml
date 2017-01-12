@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  cc-nodeapi:
+    build: ../CerebralCortex-NodeAPI
+    ports:
+      - "8080:8080"
+  kafka:
+    image: "spotify/kafka"
+    environment:
+      -  TOPICS=cc-test-topic
