@@ -7,5 +7,26 @@ services:
       - "8080:8080"
   kafka:
     image: "spotify/kafka"
+
+  spark-notebook:
+    image: "jupyter/all-spark-notebook"
+    ports:
+      - "8888:8888"
+
+  cassandra:
+    image: "cassandra:3.9"
+    ports:
+      - "9160:9160" # Thrift client API
+      - "9042:9042" # CQL native transport
     environment:
-      -  TOPICS=cc-test-topic
+      - CASSANDRA_CLUSTER_NAME=cerebralcortex
+
+  mysql:
+    image: "mysql:5.7"
+    ports:
+      - "3306:3306" # Default mysql port
+    environment:
+      - MYSQL_ROOT_PASSWORD=random_root_password
+      - MYSQL_DATABASE=cerebralcortex
+      - MYSQL_USER=cerebralcortex
+      - MYSQL_PASSWORD=cerebralcortex_pass
