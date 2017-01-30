@@ -6,6 +6,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `cerebralcortex_mysql`
 --
+DROP DATABASE IF EXISTS `cerebralcortex_mysql`;
 CREATE DATABASE IF NOT EXISTS `cerebralcortex_mysql` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `cerebralcortex_mysql`;
 
@@ -137,4 +138,3 @@ ALTER TABLE `datastream`
 --
 ALTER TABLE `study`
   ADD CONSTRAINT `fk_study_users1` FOREIGN KEY (`users_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
