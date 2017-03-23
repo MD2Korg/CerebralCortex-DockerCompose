@@ -1,3 +1,5 @@
+# noinspection SqlNoDataSourceInspectionForFile
+
 -- Generation Time: Jan 27, 2017 at 02:06 PM
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -16,40 +18,15 @@ USE `cerebralcortex_mysql`;
 -- Table structure for table `datastream`
 --
 
-CREATE TABLE `datastream` (
-  `id` int(11) NOT NULL,
-  `study_ids` json NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `processing_module_id` int(11) NOT NULL,
-  `source_ids` json DEFAULT NULL,
-  `type` varchar(45) NOT NULL,
-  `metadata` json NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `processing_module`
---
-
-CREATE TABLE `processing_module` (
-  `id` int(11) NOT NULL,
-  `metadata` json NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `study`
---
-
-CREATE TABLE `study` (
-  `id` int(11) NOT NULL,
-  `users_id` int(11) NOT NULL,
-  `metadata` json NOT NULL
+CREATE TABLE `stream` (
+  `identifier` UUID(11) NOT NULL,
+  `owner` UUID(11) NOT NULL,
+  `name` TEXT DEFAULT NULL,
+  `description` TEXT DEFAULT NULL,
+  `data_descriptor` json NOT NULL,
+  `execution_context` json NOT NULL,
+  `annotations` json DEFAULT NULL,
+  `type` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -61,7 +38,7 @@ CREATE TABLE `study` (
 --
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+  `identifier` UUID(11) NOT NULL,
   `metadata` json NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
