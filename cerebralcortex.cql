@@ -3,12 +3,12 @@ DROP KEYSPACE IF EXISTS cerebralcortex;
 CREATE KEYSPACE cerebralcortex WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1'}  AND durable_writes = true;
 
 CREATE TABLE cerebralcortex.data (
-    stream_id varint,
+    identifier uuid,
     day text,
     start_time timestamp,
     end_time timestamp,
     sample text,
-    PRIMARY KEY ((stream_id, day), start_time, end_time)
+    PRIMARY KEY ((identifier, day), start_time)
 ) WITH CLUSTERING ORDER BY (start_time ASC)
     AND bloom_filter_fp_chance = 0.01
     AND caching = {'keys': 'ALL', 'rows_per_partition': 'NONE'}
