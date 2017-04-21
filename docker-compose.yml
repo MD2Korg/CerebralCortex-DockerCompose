@@ -1,58 +1,167 @@
 version: '3'
 
-# volumes:
-#   data-volume:
-
 services:
-
+# Frontend web proxy for accessing services and providing TLS encryption
   nginx:
-    
+    build: ./nginx
+    container_name: md2k-nginx
+    ports:
+      - "443:443"
+      - "80:80"
+    links:
+      - grafana
+    depends_on:
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        tag: org.md2k.nginx
 
-  # cc-flask:
-  #   build: ../CerebralCortex-CerebralCortex-API
-  #   ports:
-  #     - "80:80"
+
+# Unified logging infrastructure for containers
+  fluentd:
+    build: ./fluentd
+    links:
+      - "elasticsearch"
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+
+  elasticsearch:
+    image: elasticsearch
+    container_name: md2k-elasticsearch
+    expose:
+      - 9200
+    ports:
+      - "9200:9200"
+
+  kibana:
+    image: kibana
+    container_name: md2k-kibana
+    links:
+      - "elasticsearch"
+    ports:
+      - "5601:5601"
 
 
-  kafka:
-    image: "spotify/kafka"
+# Data vizualizations
+  grafana:
+    image: "grafana/grafana"
+    container_name: md2k-grafana
+    ports:
+      - "3000:3000"
+    links:
+      - influxdb
+    depends_on:
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        tag: org.md2k.grafana
 
+  influxdb:
+    image: "influxdb:1.2"
+    container_name: md2k-influxdb
+    ports:
+      - "8086:8086"
+    depends_on:
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        tag: org.md2k.influxdb
+
+
+# Data Science Dashboard Interface
   spark-notebook:
     image: "jupyter/all-spark-notebook"
     ports:
       - "8888:8888"
-    container_name: spark-notebook
+    container_name: md2k-spark-notebook
     restart: always
-    # restart_policy:
-    #   condition: on-failure
-    #   delay: 5s
-    #   max_attempts: 3
-    #   window: 120s
-    # depends_on:
-    #   - db
-    #   - redis
-    # links:
-    #   - ??
-    # logging:
-    #   driver: syslog
-    #   options:
-    #     syslog-address: "tcp://192.168.0.42:123"
+    depends_on:
+      - cc-flask
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        tag: org.md2k.spark-notebook
 
 
-  # cassandra:
-  #   image: "cassandra:3.9"
-  #   ports:
-  #     - "9160:9160" # Thrift client API
-  #     - "9042:9042" # CQL native transport
-  #   environment:
-  #     - CASSANDRA_CLUSTER_NAME=cerebralcortex
-  #
-  # mysql:
-  #   image: "mysql:5.7"
-  #   ports:
-  #     - "3306:3306" # Default mysql port
-  #   environment:
-  #     - MYSQL_ROOT_PASSWORD=random_root_password
-  #     - MYSQL_DATABASE=cerebralcortex
-  #     - MYSQL_USER=cerebralcortex
-  #     - MYSQL_PASSWORD=cerebralcortex_pass
+
+
+
+# Cerebral Cortex API server
+  cc-flask:
+    build: ../CerebralCortex-CerebralCortex-API
+    container_name: md2k-cc-api
+    ports:
+      - "8080:80"
+    restart: always
+    depends_on:
+      - mysql
+      - cassandra
+      - kafka
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        tag: org.md2k.cc-api
+
+
+# Cerebral Cortex backent
+  kafka:
+    image: "spotify/kafka"
+    container_name: md2k-kafka
+    restart: always
+    depends_on:
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        tag: org.md2k.kafka
+
+  cassandra:
+    image: "cassandra:3.9"
+    container_name: md2k-cassandra
+    restart: always
+    ports:
+      - "9160:9160" # Thrift client API
+      - "9042:9042" # CQL native transport
+    # expose:
+    #   - "9160"
+    #   - "9042"
+    environment:
+      - CASSANDRA_CLUSTER_NAME=cerebralcortex
+    depends_on:
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        tag: org.md2k.cassandra
+
+  mysql:
+    image: "mysql:5.7"
+    container_name: md2k-mysql
+    restart: always
+    ports:
+      - "3306:3306" # Default mysql port
+    depends_on:
+      - fluentd
+    environment:
+      - MYSQL_ROOT_PASSWORD=random_root_password
+      - MYSQL_DATABASE=cerebralcortex
+      - MYSQL_USER=cerebralcortex
+      - MYSQL_PASSWORD=cerebralcortex_pass
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        tag: org.md2k.mysql
