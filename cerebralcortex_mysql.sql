@@ -1,7 +1,5 @@
--- Host: localhost
--- Generation Time: Apr 18, 2017 at 03:18 PM
+-- Generation Time: Apr 26, 2017 at 10:20 AM
 -- Server version: 5.7.17-0ubuntu0.16.04.2
--- PHP Version: 7.0.15-0ubuntu0.16.04.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -26,6 +24,8 @@ CREATE TABLE `stream` (
   `execution_context` json NOT NULL,
   `annotations` json DEFAULT NULL,
   `type` varchar(45) NOT NULL,
+  `start_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
   `tmp` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -65,4 +65,4 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `stream`
 --
 ALTER TABLE `stream`
-  MODIFY `tmp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `tmp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
