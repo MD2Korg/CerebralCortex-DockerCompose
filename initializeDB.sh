@@ -11,4 +11,4 @@ docker-compose exec cassandra cqlsh -f /cerebralcortex.cql
 #Setup MySQL database and tables
 docker cp cerebralcortex_mysql.sql `docker-compose ps -q mysql`:/
 # docker-compose exec mysql sh -c 'mysql -u $MYSQL_USER -p$MYSQL_PASSWORD < /cerebralcortex_mysql.sql'
-docker-compose exec mysql sh -c 'mysql -u root -p$MYSQL_ROOT_PASSWORD < /cerebralcortex_mysql.sql'
+docker-compose exec mysql sh -c 'mysql -u root -p$MYSQL_ROOT_PASSWORD --database cerebralcortex < /cerebralcortex_mysql.sql'
