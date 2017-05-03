@@ -1,5 +1,7 @@
--- Generation Time: Apr 26, 2017 at 10:20 AM
--- Server version: 5.7.17-0ubuntu0.16.04.2
+
+-- Generation Time: May 03, 2017 at 10:59 AM
+-- Server version: 5.7.18-0ubuntu0.16.04.1
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -7,8 +9,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `cerebralcortex`
 --
-CREATE DATABASE IF NOT EXISTS `cerebralcortex` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `cerebralcortex`;
 
 -- --------------------------------------------------------
 
@@ -19,10 +19,10 @@ USE `cerebralcortex`;
 CREATE TABLE `stream` (
   `identifier` varchar(36) NOT NULL,
   `owner` varchar(36) NOT NULL,
-  `name` varchar(150) DEFAULT NULL,
+  `name` varchar(150) NOT NULL,
   `data_descriptor` json NOT NULL,
   `execution_context` json NOT NULL,
-  `annotations` json DEFAULT NULL,
+  `annotations` json NOT NULL,
   `type` varchar(45) NOT NULL,
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
@@ -65,4 +65,4 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `stream`
 --
 ALTER TABLE `stream`
-  MODIFY `tmp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `tmp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
