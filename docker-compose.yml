@@ -10,7 +10,7 @@ services:
       - "80:80"
     links:
       - grafana
-      # - jupyter
+      - jupyter
     # depends_on:
     #   - fluentd
     # logging:
@@ -55,7 +55,6 @@ services:
     # links:
     #   - influxdb
     environment:
-      # - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s/grafana/
       - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:%(http_port)s/grafana/
       # - GF_INSTALL_PLUGINS=raintank-worldping-app,grafana-clock-panel,grafana-simple-json-datasource
     # depends_on:
@@ -81,12 +80,15 @@ services:
 
 
 # Data Science Dashboard Interface
-  # jupyter:
-  #   image: "jupyter/all-spark-notebook"
-  #   ports:
-  #     - "8888:8888"
-  #   container_name: md2k-spark-notebook
-  #   restart: always
+  jupyter:
+    image: "jupyter/all-spark-notebook"
+    ports:
+      - "8888:8888"
+    container_name: md2k-spark-notebook
+    restart: always
+    environment:
+      # - PASSWORD=${PASSWORD}
+      - PASSWORD=md2k
     # depends_on:
     #   - cc-flask
     #   - fluentd
