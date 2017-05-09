@@ -26,7 +26,7 @@ services:
   #   build: ./fluentd
   #   links:
   #     - "elasticsearch"
-  #   ports:
+  #   expose:
   #     - "24224:24224"
   #     - "24224:24224/udp"
   #
@@ -35,16 +35,14 @@ services:
   #   container_name: md2k-elasticsearch
   #   expose:
   #     - 9200
-  #   ports:
-  #     - "9200:9200"
   #
   # kibana:
   #   image: kibana
   #   container_name: md2k-kibana
   #   links:
   #     - "elasticsearch"
-  #   ports:
-  #     - "5601:5601"
+  #   expose:
+  #     - 5601
 
 
 # Data vizualizations
@@ -52,8 +50,8 @@ services:
     image: "grafana/grafana"
     container_name: md2k-grafana
     restart: always
-    ports:
-      - "3000:3000"
+    expose:
+      - 3000
     links:
       - influxdb
     environment:
@@ -71,8 +69,8 @@ services:
     image: "influxdb:1.2"
     container_name: md2k-influxdb
     restart: always
-    ports:
-      - "8086:8086"
+    expose:
+      - 8086
     # depends_on:
     #   - fluentd
     # logging:
@@ -84,14 +82,12 @@ services:
 
 # Data Science Dashboard Interface
   jupyter:
-    image: "jupyter/all-spark-notebook"
-    ports:
-      - "8888:8888"
+    build: ./md2k-spark-notebook
     container_name: md2k-spark-notebook
     restart: always
-    # environment:
-      # - PASSWORD=${PASSWORD}
-      # - PASSWORD=md2k
+    expose:
+      - 8888
+    command: start-notebook.sh --NotebookApp.token=''
     # depends_on:
     #   - fluentd
     # logging:
@@ -99,28 +95,6 @@ services:
     #   options:
     #     fluentd-address: localhost:24224
     #     tag: org.md2k.spark-notebook
-
-
-
-
-
-# Cerebral Cortex API server
-  # cc-flask:
-  #   build: ../CerebralCortex-CerebralCortex-API
-  #   container_name: md2k-cc-api
-  #   ports:
-  #     - "8080:80"
-  #   restart: always
-  #   depends_on:
-  #     - mysql
-  #     - cassandra
-  #     - kafka
-    #   - fluentd
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: localhost:24224
-    #     tag: org.md2k.cc-api
 
 
 # Cerebral Cortex backend
@@ -166,12 +140,9 @@ services:
 
     container_name: md2k-cassandra
     restart: always
-    ports:
-      - "9160:9160" # Thrift client API
-      - "9042:9042" # CQL native transport
-    # expose:
-    #   - "9160"
-    #   - "9042"
+    expose:
+      - 9160 # Thrift client API
+      - 9042 # CQL native transport
     environment:
       - CASSANDRA_CLUSTER_NAME=cerebralcortex
     # depends_on:
@@ -186,8 +157,8 @@ services:
     image: "mysql:5.7"
     container_name: md2k-mysql
     restart: always
-    ports:
-      - "3306:3306" # Default mysql port
+    expose:
+      - 3306 # Default mysql port
     environment:
       - MYSQL_ROOT_PASSWORD=random_root_password
       - MYSQL_DATABASE=cerebralcortex
