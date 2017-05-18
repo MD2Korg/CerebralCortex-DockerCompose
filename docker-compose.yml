@@ -140,9 +140,9 @@ services:
 
     container_name: md2k-cassandra
     restart: always
-    expose:
-      - 9160 # Thrift client API
-      - 9042 # CQL native transport
+    ports:
+      - 9160:9160 # Thrift client API
+      - 9042:9042 # CQL native transport
     environment:
       - CASSANDRA_CLUSTER_NAME=cerebralcortex
     # depends_on:
@@ -157,8 +157,8 @@ services:
     image: "mysql:5.7"
     container_name: md2k-mysql
     restart: always
-    expose:
-      - 3306 # Default mysql port
+    ports:
+      - 3306:3306 # Default mysql port
     environment:
       - MYSQL_ROOT_PASSWORD=random_root_password
       - MYSQL_DATABASE=cerebralcortex
