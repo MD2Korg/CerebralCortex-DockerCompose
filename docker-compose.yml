@@ -173,3 +173,22 @@ services:
     #   options:
     #     fluentd-address: localhost:24224
     #     tag: org.md2k.mysql
+
+
+  minio:
+    image: "minio/minio"
+    container_name: md2k-minio
+    restart: always
+    ports:
+      - 9000:9000 # Default minio port
+    environment:
+      - MINIO_ACCESS_KEY=ZngmrLWgbSfZUvgocyeH
+      - MINIO_SECRET_KEY=IwUnI5w0f5Hf1v2qVwcr
+    command: server /export
+    # depends_on:
+    #   - fluentd
+    # logging:
+    #   driver: fluentd
+    #   options:
+    #     fluentd-address: localhost:24224
+    #     tag: org.md2k.minio
