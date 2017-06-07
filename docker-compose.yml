@@ -12,13 +12,13 @@ services:
     links:
       - grafana
       - jupyter
-    # depends_on:
-    #   - fluentd
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: localhost:24224
-    #     tag: org.md2k.nginx
+    depends_on:
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        tag: org.md2k.nginx
 
 
 # Unified logging infrastructure for containers
@@ -26,9 +26,9 @@ services:
     build: ./fluentd
     links:
       - "elasticsearch"
-    expose:
-      - "24224/tcp"
-      - "24224/udp"
+    ports:
+      - "24224:24224/tcp"
+      - "24224:24224/udp"
 
   elasticsearch:
     image: elasticsearch
@@ -42,7 +42,7 @@ services:
     links:
       - "elasticsearch"
     ports:
-      - 5601
+      - 5601:5601
 
 
 # Data vizualizations
@@ -57,13 +57,13 @@ services:
     environment:
       - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:%(http_port)s/grafana/
       # - GF_INSTALL_PLUGINS=raintank-worldping-app,grafana-clock-panel,grafana-simple-json-datasource
-    # depends_on:
-    #   - fluentd
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: localhost:24224
-    #     tag: org.md2k.grafana
+    depends_on:
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        tag: org.md2k.grafana
 
   influxdb:
     image: "influxdb:1.2"
@@ -71,13 +71,13 @@ services:
     restart: always
     expose:
       - 8086
-    # depends_on:
-    #   - fluentd
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: localhost:24224
-    #     tag: org.md2k.influxdb
+    depends_on:
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        tag: org.md2k.influxdb
 
 
 # Data Science Dashboard Interface
@@ -88,13 +88,13 @@ services:
     expose:
       - 8888
     command: start-notebook.sh --NotebookApp.token=''
-    # depends_on:
-    #   - fluentd
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: localhost:24224
-    #     tag: org.md2k.spark-notebook
+    depends_on:
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        tag: org.md2k.spark-notebook
 
 
 # Cerebral Cortex backend
@@ -112,12 +112,12 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - zookeeper
-    #   - fluentd
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: localhost:24224
-    #     tag: org.md2k.kafka
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        tag: org.md2k.kafka
 
   zookeeper:
     image: wurstmeister/zookeeper
@@ -125,19 +125,17 @@ services:
     restart: always
     ports:
       - "2181:2181"
-    # depends_on:
-    #   - fluentd
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: localhost:24224
-    #     tag: org.md2k.kafka
+    depends_on:
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        tag: org.md2k.kafka
 
 
   cassandra:
-    # image: "cassandra:3.9"
     build: ./cassandra
-
     container_name: md2k-cassandra
     restart: always
     ports:
@@ -145,13 +143,13 @@ services:
       - 9042:9042 # CQL native transport
     environment:
       - CASSANDRA_CLUSTER_NAME=cerebralcortex
-    # depends_on:
-    #   - fluentd
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: localhost:24224
-    #     tag: org.md2k.cassandra
+    depends_on:
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        tag: org.md2k.cassandra
 
   mysql:
     image: "mysql:5.7"
@@ -166,13 +164,13 @@ services:
       - MYSQL_PASSWORD=cerebralcortex_pass
     volumes:
       - ./mysql/initdb.d:/docker-entrypoint-initdb.d
-    # depends_on:
-    #   - fluentd
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: localhost:24224
-    #     tag: org.md2k.mysql
+    depends_on:
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        tag: org.md2k.mysql
 
 
   minio:
@@ -185,10 +183,10 @@ services:
       - MINIO_ACCESS_KEY=ZngmrLWgbSfZUvgocyeH
       - MINIO_SECRET_KEY=IwUnI5w0f5Hf1v2qVwcr
     command: server /export
-    # depends_on:
-    #   - fluentd
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: localhost:24224
-    #     tag: org.md2k.minio
+    depends_on:
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        tag: org.md2k.minio
