@@ -22,27 +22,27 @@ services:
 
 
 # Unified logging infrastructure for containers
-  # fluentd:
-  #   build: ./fluentd
-  #   links:
-  #     - "elasticsearch"
-  #   expose:
-  #     - "24224:24224"
-  #     - "24224:24224/udp"
-  #
-  # elasticsearch:
-  #   image: elasticsearch
-  #   container_name: md2k-elasticsearch
-  #   expose:
-  #     - 9200
-  #
-  # kibana:
-  #   image: kibana
-  #   container_name: md2k-kibana
-  #   links:
-  #     - "elasticsearch"
-  #   expose:
-  #     - 5601
+  fluentd:
+    build: ./fluentd
+    links:
+      - "elasticsearch"
+    expose:
+      - "24224:24224"
+      - "24224:24224/udp"
+
+  elasticsearch:
+    image: elasticsearch
+    container_name: md2k-elasticsearch
+    expose:
+      - 9200
+
+  kibana:
+    image: kibana
+    container_name: md2k-kibana
+    links:
+      - "elasticsearch"
+    ports:
+      - 5601
 
 
 # Data vizualizations
