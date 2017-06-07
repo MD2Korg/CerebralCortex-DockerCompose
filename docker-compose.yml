@@ -27,8 +27,8 @@ services:
     links:
       - "elasticsearch"
     expose:
-      - "24224:24224"
-      - "24224:24224/udp"
+      - "24224/tcp"
+      - "24224/udp"
 
   elasticsearch:
     image: elasticsearch
