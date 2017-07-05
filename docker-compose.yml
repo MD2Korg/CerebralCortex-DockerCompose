@@ -34,10 +34,12 @@ services:
   #     - "24224:24224/udp"
   #
   # elasticsearch:
-  #   image: elasticsearch
+  #   image: elasticsearc:alpine
   #   container_name: md2k-elasticsearch
   #   expose:
   #     - 9200
+  #   volumes:
+  #     - log-storage:/usr/share/elasticsearch/data
   #
   # kibana:
   #   # image: docker.elastic.co/kibana/kibana:5.4.1
@@ -65,6 +67,9 @@ services:
     environment:
       - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:%(http_port)s/grafana/
       # - GF_INSTALL_PLUGINS=raintank-worldping-app,grafana-clock-panel,grafana-simple-json-datasource
+    volumes:
+      - timeseries-storage:/var/lib/grafana
+      # - timeseries-storage:/etc/grafana
     # depends_on:
     #   - fluentd
     # logging:
@@ -74,11 +79,13 @@ services:
     #     tag: org.md2k.grafana
 
   influxdb:
-    image: "influxdb:1.2"
+    image: "influxdb:alpine"
     container_name: md2k-influxdb
     restart: always
     expose:
       - 8086
+    volumes:
+      - timeseries-storage:/var/lib/influxdb
     # depends_on:
     #   - fluentd
     # logging:
@@ -96,6 +103,8 @@ services:
     expose:
       - 8888
     command: start-notebook.sh --NotebookApp.token=''
+    volumes:
+      - user-storage:/home/jovyan/work
     # depends_on:
     #   - fluentd
     # logging:
@@ -116,8 +125,11 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: 192.168.99.100
       KAFKA_CREATE_TOPICS: "cc-test-topic:3:1:compact"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_MESSAGE_MAX_BYTES: 2000000
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - data-storage:/kafka
     depends_on:
       - zookeeper
     #   - fluentd
@@ -151,6 +163,8 @@ services:
       - 9042:9042 # CQL native transport
     environment:
       - CASSANDRA_CLUSTER_NAME=cerebralcortex
+    volumes:
+      - data-storage:/var/lib/cassandra
     # depends_on:
     #   - fluentd
     # logging:
@@ -172,6 +186,7 @@ services:
       - MYSQL_PASSWORD=cerebralcortex_pass
     volumes:
       - ./mysql/initdb.d:/docker-entrypoint-initdb.d
+      - metadata-storage:/var/lib/mysql
     # depends_on:
     #   - fluentd
     # logging:
@@ -191,6 +206,8 @@ services:
       - MINIO_ACCESS_KEY=ZngmrLWgbSfZUvgocyeH
       - MINIO_SECRET_KEY=IwUnI5w0f5Hf1v2qVwcr
     command: server /export
+    volumes:
+      - object-storage:/export
     # depends_on:
     #   - fluentd
     # logging:
@@ -198,3 +215,12 @@ services:
     #   options:
     #     fluentd-address: localhost:24224
     #     tag: org.md2k.minio
+
+
+volumes:
+  object-storage:
+  metadata-storage:
+  data-storage:
+  timeseries-storage:
+  user-storage:
+  log-storage:
