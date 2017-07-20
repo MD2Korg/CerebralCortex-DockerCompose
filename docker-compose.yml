@@ -1,5 +1,7 @@
 version: '3'
 
+# The .env file is for production use with server-specific configurations
+
 services:
 # Frontend web proxy for accessing services and providing TLS encryption
   nginx:
@@ -12,48 +14,6 @@ services:
     links:
       - grafana
       - jupyter
-    # depends_on:
-    #   - fluentd
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: localhost:24224
-    #     tag: org.md2k.nginx
-
-
-# Unified logging infrastructure for containers
-  # fluentd:
-  #   build: ./fluentd
-  #   container_name: md2k-fluentd
-  #   links:
-  #     - "elasticsearch"
-  #   depends_on:
-  #     - elasticsearch
-  #   ports:
-  #     - "24224:24224/tcp"
-  #     - "24224:24224/udp"
-  #
-  # elasticsearch:
-  #   image: elasticsearc:alpine
-  #   container_name: md2k-elasticsearch
-  #   expose:
-  #     - 9200
-  #   volumes:
-  #     - log-storage:/usr/share/elasticsearch/data
-  #
-  # kibana:
-  #   # image: docker.elastic.co/kibana/kibana:5.4.1
-  #   image: kibana
-  #   container_name: md2k-kibana
-  #   links:
-  #     - "elasticsearch"
-  #   depends_on:
-  #     - elasticsearch
-  #   # environment:
-  #   #   - SERVER_BASEPATH=/logging
-  #   ports:
-  #     - 5601:5601
-
 
 # Data vizualizations
   grafana:
@@ -70,13 +30,6 @@ services:
     volumes:
       - timeseries-storage:/var/lib/grafana
       # - timeseries-storage:/etc/grafana
-    # depends_on:
-    #   - fluentd
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: localhost:24224
-    #     tag: org.md2k.grafana
 
   influxdb:
     image: "influxdb:alpine"
@@ -86,14 +39,6 @@ services:
       - 8086
     volumes:
       - timeseries-storage:/var/lib/influxdb
-    # depends_on:
-    #   - fluentd
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: localhost:24224
-    #     tag: org.md2k.influxdb
-
 
 # Data Science Dashboard Interface
   jupyter:
@@ -105,25 +50,18 @@ services:
     command: start-notebook.sh --NotebookApp.token=''
     volumes:
       - user-storage:/home/jovyan/work
-    # depends_on:
-    #   - fluentd
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: localhost:24224
-    #     tag: org.md2k.spark-notebook
 
 
 # Cerebral Cortex backend
   kafka:
-    image: wurstmeister/kafka
+    image: wurstmeister/kafka:0.10.2.0
     container_name: md2k-kafka
     restart: always
     ports:
       - "9092:9092"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.99.100
-      KAFKA_CREATE_TOPICS: "cc-test-topic:3:1:compact"
+      KAFKA_ADVERTISED_HOST_NAME: ${MACHINE_IP:-192.168.0.104} #DO NOT USE LOCALHOST HERE, USE the machine IP/HOSTNAME
+      KAFKA_ADVERTISED_PORT: 9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_MESSAGE_MAX_BYTES: 2000000
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
@@ -132,12 +70,6 @@ services:
       - data-storage:/kafka
     depends_on:
       - zookeeper
-    #   - fluentd
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: localhost:24224
-    #     tag: org.md2k.kafka
 
   zookeeper:
     image: wurstmeister/zookeeper
@@ -145,14 +77,6 @@ services:
     restart: always
     ports:
       - "2181:2181"
-    # depends_on:
-    #   - fluentd
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: localhost:24224
-    #     tag: org.md2k.kafka
-
 
   cassandra:
     build: ./cassandra
@@ -165,13 +89,6 @@ services:
       - CASSANDRA_CLUSTER_NAME=cerebralcortex
     volumes:
       - data-storage:/var/lib/cassandra
-    # depends_on:
-    #   - fluentd
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: localhost:24224
-    #     tag: org.md2k.cassandra
 
   mysql:
     image: "mysql:5.7"
@@ -180,21 +97,13 @@ services:
     ports:
       - 3306:3306 # Default mysql port
     environment:
-      - MYSQL_ROOT_PASSWORD=random_root_password
-      - MYSQL_DATABASE=cerebralcortex
-      - MYSQL_USER=cerebralcortex
-      - MYSQL_PASSWORD=cerebralcortex_pass
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-random_root_password}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-cerebralcortex}
+      - MYSQL_USER=${MYSQL_USER:-cerebralcortex}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-cerebralcortex_pass}
     volumes:
       - ./mysql/initdb.d:/docker-entrypoint-initdb.d
       - metadata-storage:/var/lib/mysql
-    # depends_on:
-    #   - fluentd
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: localhost:24224
-    #     tag: org.md2k.mysql
-
 
   minio:
     image: "minio/minio"
@@ -203,18 +112,11 @@ services:
     ports:
       - 9000:9000 # Default minio port
     environment:
-      - MINIO_ACCESS_KEY=ZngmrLWgbSfZUvgocyeH
-      - MINIO_SECRET_KEY=IwUnI5w0f5Hf1v2qVwcr
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-ZngmrLWgbSfZUvgocyeH}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
     command: server /export
     volumes:
       - object-storage:/export
-    # depends_on:
-    #   - fluentd
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: localhost:24224
-    #     tag: org.md2k.minio
 
 
 volumes:
