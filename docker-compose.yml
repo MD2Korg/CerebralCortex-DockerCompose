@@ -26,6 +26,16 @@ services:
       - mysql
       - kafka
       - minio
+    environment:
+      - MINIO_HOST=${MINIO_HOST:-minio}
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-ZngmrLWgbSfZUvgocyeH}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
+      - MYSQL_HOST=${MYSQL:-mysql}
+      - MYSQL_DB_USER=${MYSQL_ROOT_USER:-root}
+      - MYSQL_DB_PASS=${MYSQL_ROOT_PASSWORD:-random_root_password}
+      - KAFKA_HOST=${KAFKA_HOST:-kafka}
+      - JWT_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
+
 
 # Data vizualizations
   grafana:
