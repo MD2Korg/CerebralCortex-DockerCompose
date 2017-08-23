@@ -1,5 +1,8 @@
 version: '3'
 
+extra_hosts:
+  - "cassandra:${CASSANDRA_IP:-localhost}"
+
 services:
   nginx:
     depends_on:
@@ -94,16 +97,6 @@ services:
       options:
         fluentd-address: ${MACHINE_IP:-localhost}:24224
         tag: org.md2k.kafka
-
-
-  cassandra:
-    depends_on:
-      - fluentd
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: ${MACHINE_IP:-localhost}:24224
-        tag: org.md2k.cassandra
 
   mysql:
     depends_on:
