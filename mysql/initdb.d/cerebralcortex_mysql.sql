@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 25, 2017 at 03:31 PM
--- Server version: 5.7.18-0ubuntu0.16.04.1
--- PHP Version: 7.0.18-0ubuntu0.16.04.1
+-- Generation Time: Aug 23, 2017 at 01:34 PM
+-- Server version: 5.7.19-0ubuntu0.16.04.1
+-- PHP Version: 7.0.22-0ubuntu0.16.04.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -15,8 +15,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `cerebralcortex`
 --
-CREATE DATABASE IF NOT EXISTS `cerebralcortex` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `cerebralcortex`;
 
 -- --------------------------------------------------------
 
@@ -24,7 +22,6 @@ USE `cerebralcortex`;
 -- Table structure for table `stream`
 --
 
-DROP TABLE IF EXISTS `stream`;
 CREATE TABLE `stream` (
   `identifier` varchar(36) NOT NULL,
   `owner` varchar(36) NOT NULL,
@@ -44,7 +41,6 @@ CREATE TABLE `stream` (
 -- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `identifier` varchar(36) NOT NULL,
   `user_name` varchar(80) NOT NULL,
@@ -62,7 +58,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`identifier`, `user_name`, `password`, `token`, `token_issued`, `token_expiry`, `type`, `metadata`, `tmp`) VALUES
-('123', 'demo', 'demo', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2NsYWltcyI6e30sImlhdCI6MTUwMTAwNTI3MSwibmJmIjoxNTAxMDA1MjcxLCJleHAiOjE1MDEwMDU2NzEsInR5cGUiOiJhY2Nlc3MiLCJpZGVudGl0eSI6ImRlbW8iLCJmcmVzaCI6ZmFsc2UsImp0aSI6IjkyMjgyNzA5LTU5MjUtNDhjMS1iMmMzLWY3YzA1N2FmMjBhZSJ9.4iq2sb-h8-JKSbl3bzdXJdxAzYHviFLh9NBVcZFvzi8', '2017-07-25 12:54:31', '2017-07-25 13:01:11', 'md2k', '{}', 1);
+('123', 'string', 'string', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MDM1MTM2MDEsIm5iZiI6MTUwMzUxMzIwMSwiaWRlbnRpdHkiOiJzdHJpbmciLCJmcmVzaCI6ZmFsc2UsImp0aSI6Ijk4MmMwYWQ1LTkzZWMtNDdkZC04NmQ1LTk0YjkwMDNkM2MwZCIsInR5cGUiOiJhY2Nlc3MiLCJ1c2VyX2NsYWltcyI6e30sImlhdCI6MTUwMzUxMzIwMX0.yXypq0xfTG1Jn7CGnpq5CG6_-KDBE9O14Qh2j3y5Krk', '2017-08-23 13:33:21', '2017-08-23 13:40:01', 'md2k', '{}', 1);
 
 --
 -- Indexes for dumped tables
