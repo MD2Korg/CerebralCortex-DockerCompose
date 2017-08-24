@@ -35,6 +35,9 @@ services:
       - MYSQL_DB_PASS=${MYSQL_ROOT_PASSWORD:-random_root_password}
       - KAFKA_HOST=${KAFKA_HOST:-kafka}
       - JWT_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
+      - FLASK_HOST=${FLASK_HOST:-0.0.0.0}
+      - FLASK_PORT=${FLASK_PORT:-80}
+      - FLASK_DEBUG=${FLASK_DEBUG:-False}
 
 
 # Data vizualizations
