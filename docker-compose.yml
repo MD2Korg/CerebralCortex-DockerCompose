@@ -10,8 +10,9 @@ services:
     restart: always
     ports:
       - "443:443"
-      - "80:80"
+      - "8080:80"
     links:
+      - apiserver
       - grafana
       - jupyter
 
@@ -20,8 +21,10 @@ services:
     build: ../CerebralCortex-APIServer
     container_name: md2k-api-server
     restart: always
-    ports:
-      - "80:80"
+    # ports:
+    #   - "80:80"
+    expose:
+      - 80
     links:
       - mysql
       - kafka
