@@ -20,6 +20,14 @@ services:
     build: ../CerebralCortex-APIServer
     container_name: md2k-api-server
     restart: always
+
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+        reservations:
+          cpus: '4'
+
     ports:
       - "80:80"
     links:
@@ -106,8 +114,8 @@ services:
     image: "mysql:5.7"
     container_name: md2k-mysql
     restart: always
-    ports:
-      - 3306:3306 # Default mysql port
+    expose:
+      - 3306 # Default mysql port
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-random_root_password}
       - MYSQL_DATABASE=${MYSQL_DATABASE:-cerebralcortex}
