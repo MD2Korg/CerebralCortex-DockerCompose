@@ -48,6 +48,15 @@ services:
     #   - SERVER_BASEPATH=/logging
 
 
+  apiserver:
+    depends_on:
+      - fluentd
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: ${MACHINE_IP:-localhost}:24224
+        tag: org.md2k.apiserver
+
 # Data vizualizations
   grafana:
     depends_on:
