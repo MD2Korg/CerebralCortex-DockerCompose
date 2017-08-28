@@ -21,15 +21,14 @@ services:
     build: ../CerebralCortex-APIServer
     container_name: md2k-api-server
     restart: always
-    # ports:
-    #   - "80:80"
     expose:
       - 80
-
     links:
       - mysql
       - kafka
       - minio
+    depends_on:
+      - mysql
     environment:
       - MINIO_HOST=${MINIO_HOST:-minio}
       - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-ZngmrLWgbSfZUvgocyeH}
@@ -42,7 +41,8 @@ services:
       - FLASK_HOST=${FLASK_HOST:-0.0.0.0}
       - FLASK_PORT=${FLASK_PORT:-80}
       - FLASK_DEBUG=${FLASK_DEBUG:-False}
-
+    volumes:
+      - temp-storage:/data
 
 # Data vizualizations
   grafana:
@@ -139,6 +139,7 @@ volumes:
   object-storage:
   metadata-storage:
   data-storage:
+  temp-storage:
   timeseries-storage:
   user-storage:
   log-storage:
