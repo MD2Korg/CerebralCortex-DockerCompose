@@ -10,7 +10,7 @@ services:
     restart: always
     ports:
       - "443:443"
-      - "8080:80"
+      - "80:80"
     links:
       - apiserver
       - grafana
@@ -69,16 +69,24 @@ services:
     volumes:
       - timeseries-storage:/var/lib/influxdb
 
-# Data Science Dashboard Interface
+
   jupyter:
-    build: ./md2k-spark-notebook
-    container_name: md2k-spark-notebook
-    restart: always
+    build: ./jupyterhub
     expose:
-      - 8888
-    command: start-notebook.sh --NotebookApp.token=''
-    volumes:
-      - user-storage:/home/jovyan/work
+      - 8000
+    restart: always
+    
+
+# Data Science Dashboard Interface
+  # jupyter:
+  #   build: ./md2k-spark-notebook
+  #   container_name: md2k-spark-notebook
+  #   restart: always
+  #   expose:
+  #     - 8888
+  #   command: start-notebook.sh --NotebookApp.token=''
+  #   volumes:
+  #     - user-storage:/home/jovyan/work
 
 
 # Cerebral Cortex backend
