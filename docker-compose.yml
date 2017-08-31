@@ -72,10 +72,13 @@ services:
 
   jupyter:
     build: ./jupyterhub
-    expose:
+    ports:
       - 8000
     restart: always
-    
+    network_mode: "host"
+    pid: "host"
+    environment:
+      TINI_SUBREAPER: 'true'
 
 # Data Science Dashboard Interface
   # jupyter:
