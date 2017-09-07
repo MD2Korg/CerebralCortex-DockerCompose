@@ -16,7 +16,6 @@ services:
       - grafana
       - jupyter
 
-
   apiserver:
     build: ../CerebralCortex-APIServer
     container_name: md2k-api-server
@@ -71,26 +70,17 @@ services:
       - timeseries-storage:/var/lib/influxdb
 
 
+# Data Science Dashboard Interface
   jupyter:
     build: ./jupyterhub
     ports:
       - 8000
     restart: always
-    network_mode: "host"
+    #    network_mode: "host"
     pid: "host"
     environment:
       TINI_SUBREAPER: 'true'
 
-# Data Science Dashboard Interface
-  # jupyter:
-  #   build: ./md2k-spark-notebook
-  #   container_name: md2k-spark-notebook
-  #   restart: always
-  #   expose:
-  #     - 8888
-  #   command: start-notebook.sh --NotebookApp.token=''
-  #   volumes:
-  #     - user-storage:/home/jovyan/work
 
 
 # Cerebral Cortex backend
