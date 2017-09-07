@@ -187,10 +187,10 @@ c.JupyterHub.base_url = '/jupyterhub/'
 #  
 #  See `hub_connect_ip` for cases where the bind and connect address should
 #  differ.
-#c.JupyterHub.hub_ip = '10.40.40.46'
+c.JupyterHub.hub_ip = '10.40.40.46'
 
 ## The port for the Hub process
-#c.JupyterHub.hub_port = 8082
+c.JupyterHub.hub_port = 8082
 
 ## The public facing ip of the whole application (the proxy)
 #

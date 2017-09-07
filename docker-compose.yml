@@ -1,5 +1,11 @@
 version: '3'
 
+# IPTABLES RULES IF NECESSARY
+#-A INPUT -i br+ -j ACCEPT
+#-A INPUT -i docker0 -j ACCEPT
+#-A OUTPUT -o br+ -j ACCEPT
+#-A OUTPUT -o docker0 -j ACCEPT
+
 # The .env file is for production use with server-specific configurations
 
 services:
@@ -76,7 +82,7 @@ services:
     ports:
       - 8000
     restart: always
-    #    network_mode: "host"
+    network_mode: "host"
     pid: "host"
     environment:
       TINI_SUBREAPER: 'true'
