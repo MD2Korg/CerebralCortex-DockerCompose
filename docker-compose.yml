@@ -14,6 +14,8 @@ services:
     build: ./nginx
     container_name: md2k-nginx
     restart: always
+    volumes:
+      - ./nginx/site:/var/www
     ports:
       - "443:443"
       - "80:80"
