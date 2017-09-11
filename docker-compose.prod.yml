@@ -1,127 +1,15 @@
 version: '3'
 
-extra_hosts:
-  - "cassandra:${CASSANDRA_IP:-localhost}"
+# The .env file is for production use with server-specific configurations
 
 services:
   nginx:
-    depends_on:
-      - fluentd
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: ${MACHINE_IP:-localhost}:24224
-        tag: org.md2k.nginx
-
-
-# Unified logging infrastructure for containers
-  fluentd:
-    build: ./fluentd
-    container_name: md2k-fluentd
-    links:
-      - "elasticsearch"
-    depends_on:
-      - elasticsearch
-    ports:
-      - "24224:24224/tcp"
-      - "24224:24224/udp"
-
-  elasticsearch:
-    image: elasticsearch:alpine
-    container_name: md2k-elasticsearch
-    expose:
-      - 9200
     volumes:
-      - log-storage:/usr/share/elasticsearch/data
-
-  kibana:
-    # image: docker.elastic.co/kibana/kibana:5.4.1
-    image: kibana
-    container_name: md2k-kibana
-    ports:
-      - 5601:5601
-    links:
-      - "elasticsearch"
-    depends_on:
-      - elasticsearch
-    # environment:
-    #   - SERVER_BASEPATH=/logging
-
-
-  apiserver:
-    depends_on:
-      - fluentd
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: ${MACHINE_IP:-localhost}:24224
-        tag: org.md2k.apiserver
-
-# Data vizualizations
-  grafana:
-    depends_on:
-      - fluentd
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: ${MACHINE_IP:-localhost}:24224
-        tag: org.md2k.grafana
-
-  influxdb:
-    depends_on:
-      - fluentd
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: ${MACHINE_IP:-localhost}:24224
-        tag: org.md2k.influxdb
-
-
-# Data Science Dashboard Interface
-  jupyter:
-    depends_on:
-      - fluentd
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: ${MACHINE_IP:-localhost}:24224
-        tag: org.md2k.spark-notebook
-
-
-# Cerebral Cortex backend
-  kafka:
-    depends_on:
-      - fluentd
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: ${MACHINE_IP:-localhost}:24224
-        tag: org.md2k.kafka
-
-  zookeeper:
-    depends_on:
-      - fluentd
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: ${MACHINE_IP:-localhost}:24224
-        tag: org.md2k.kafka
+      - ./nginx/md2k-bundle.crt:/etc/ssh/certs/ssl-cert.crt
+      - ./nginx/md2k.org.key:/etc/ssh/certs/ssl-cert.key
 
   mysql:
-    depends_on:
-      - fluentd
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: ${MACHINE_IP:-localhost}:24224
-        tag: org.md2k.mysql
+    #Should be external for production
 
-
-  minio:
-    depends_on:
-      - fluentd
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: ${MACHINE_IP:-localhost}:24224
-        tag: org.md2k.minio
+  cassandra:
+    #Should be external for production
