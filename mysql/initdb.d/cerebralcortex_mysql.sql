@@ -77,18 +77,3 @@ ALTER TABLE `stream`
 ALTER TABLE `user`
   ADD PRIMARY KEY (`tmp`),
   ADD KEY `UUID` (`identifier`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `stream`
---
-ALTER TABLE `stream`
-  MODIFY `tmp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `tmp` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;COMMIT;
