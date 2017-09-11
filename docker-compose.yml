@@ -103,6 +103,7 @@ services:
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_MESSAGE_MAX_BYTES: 2000000
+      KAFKA_CREATE_TOPICS: "filequeue:4:1,processed_stream:16:1"
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -123,6 +124,8 @@ services:
     restart: always
     ports:
       - 3306:3306 # Default mysql port
+    #expose:
+    #  - 3306
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-random_root_password}
       - MYSQL_DATABASE=${MYSQL_DATABASE:-cerebralcortex}
