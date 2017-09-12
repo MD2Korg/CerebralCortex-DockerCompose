@@ -7,12 +7,3 @@ services:
     volumes:
       - ./nginx/md2k-bundle.crt:/etc/ssh/certs/ssl-cert.crt
       - ./nginx/md2k.org.key:/etc/ssh/certs/ssl-cert.key
-
-  # mysql:
-  #   #Should be external for production
-  #
-  # cassandra:
-  #   #Should be external for production
-  #
-  # influxdb:
-  #   #Should be external for production
