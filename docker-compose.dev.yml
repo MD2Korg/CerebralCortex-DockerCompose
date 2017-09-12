@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  nginx:
+    volumes:
+      - ./nginx/nginx-selfsigned.crt:/etc/ssh/certs/ssl-cert.crt
+      - ./nginx/nginx-selfsigned.key:/etc/ssh/certs/ssl-cert.key
+
+  apiserver:
+    links:
+      - mysql
+    depends_on:
+      - mysql
+
+  grafana:
+    links:
+      - influxdb
+
+  influxdb:
+    image: "influxdb:alpine"
+    container_name: md2k-influxdb
+    restart: always
+    ports:
+      - 8086
+    volumes:
+      - timeseries-storage:/var/lib/influxdb
+
+  mysql:
+    image: "mysql:5.7"
+    container_name: md2k-mysql
+    restart: always
+    ports:
+      - 3306:3306 # Default mysql port
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-random_root_password}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-cerebralcortex}
+      - MYSQL_USER=${MYSQL_USER:-cerebralcortex}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-cerebralcortex_pass}
+    volumes:
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
+      - metadata-storage:/var/lib/mysql
+
+  cassandra:
+    build: ./cassandra
+    container_name: md2k-cassandra
+    restart: always
+    ports:
+      - 9160:9160 # Thrift client API
+      - 9042:9042 # CQL native transport
+    environment:
+      - CASSANDRA_CLUSTER_NAME=cerebralcortex
+    volumes:
+      - data-storage:/var/lib/cassandra
