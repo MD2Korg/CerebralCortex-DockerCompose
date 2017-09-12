@@ -1,0 +1,6 @@
+
+**/*~
+**/md2k-bundle.crt
+**/md2k.org.key
+.env
+/metastore_db/
