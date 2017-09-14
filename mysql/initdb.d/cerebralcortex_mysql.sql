@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 23, 2017 at 01:34 PM
+-- Generation Time: Sep 14, 2017 at 05:21 PM
 -- Server version: 5.7.19-0ubuntu0.16.04.1
 -- PHP Version: 7.0.22-0ubuntu0.16.04.1
 
@@ -15,6 +15,24 @@ SET time_zone = "+00:00";
 --
 -- Database: `cerebralcortex`
 --
+CREATE DATABASE IF NOT EXISTS `cerebralcortex` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `cerebralcortex`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kafka_offsets`
+--
+
+DROP TABLE IF EXISTS `kafka_offsets`;
+CREATE TABLE `kafka_offsets` (
+  `id` int(5) NOT NULL,
+  `topic` varchar(255) NOT NULL,
+  `topic_partition` varchar(15) NOT NULL,
+  `offset_start` varchar(20) NOT NULL,
+  `offset_until` varchar(20) NOT NULL,
+  `offset_update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -22,6 +40,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `stream`
 --
 
+DROP TABLE IF EXISTS `stream`;
 CREATE TABLE `stream` (
   `identifier` varchar(36) NOT NULL,
   `owner` varchar(36) NOT NULL,
@@ -41,6 +60,7 @@ CREATE TABLE `stream` (
 -- Table structure for table `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `identifier` varchar(36) NOT NULL,
   `user_name` varchar(80) NOT NULL,
@@ -58,11 +78,19 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`identifier`, `user_name`, `password`, `token`, `token_issued`, `token_expiry`, `type`, `metadata`, `tmp`) VALUES
-('123', 'string', 'string', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MDM1MTM2MDEsIm5iZiI6MTUwMzUxMzIwMSwiaWRlbnRpdHkiOiJzdHJpbmciLCJmcmVzaCI6ZmFsc2UsImp0aSI6Ijk4MmMwYWQ1LTkzZWMtNDdkZC04NmQ1LTk0YjkwMDNkM2MwZCIsInR5cGUiOiJhY2Nlc3MiLCJ1c2VyX2NsYWltcyI6e30sImlhdCI6MTUwMzUxMzIwMX0.yXypq0xfTG1Jn7CGnpq5CG6_-KDBE9O14Qh2j3y5Krk', '2017-08-23 13:33:21', '2017-08-23 13:40:01', 'md2k', '{}', 1);
+('123', 'string', 'string', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MiLCJ1c2VyX2NsYWltcyI6e30sImlhdCI6MTUwNDExNjY2MCwibmJmIjoxNTA0MTE2NjYwLCJleHAiOjE1MDQxMTcwNjAsImp0aSI6Ijk4ZDcyNjc1LWZhN2QtNDE3NS1hYWRlLWFkNTdiNTBjMmRhYyIsImlkZW50aXR5Ijoic3RyaW5nIn0.JlkE2YFeGbQxzxp3ikPhuh90xbonL2B-hZyCqevLe0w', '2017-08-30 13:11:00', '2017-08-30 13:17:40', 'md2k', '{}', 1);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `kafka_offsets`
+--
+ALTER TABLE `kafka_offsets`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_topic` (`topic`(20)),
+  ADD KEY `topic` (`topic`);
 
 --
 -- Indexes for table `stream`
@@ -77,3 +105,23 @@ ALTER TABLE `stream`
 ALTER TABLE `user`
   ADD PRIMARY KEY (`tmp`),
   ADD KEY `UUID` (`identifier`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `kafka_offsets`
+--
+ALTER TABLE `kafka_offsets`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, 1;
+--
+-- AUTO_INCREMENT for table `stream`
+--
+ALTER TABLE `stream`
+  MODIFY `tmp` int(11) NOT NULL AUTO_INCREMENT, 1;
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `tmp` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;COMMIT;
