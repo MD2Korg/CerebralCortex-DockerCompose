@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 14, 2017 at 05:21 PM
+-- Generation Time: Sep 15, 2017 at 12:00 PM
 -- Server version: 5.7.19-0ubuntu0.16.04.1
 -- PHP Version: 7.0.22-0ubuntu0.16.04.1
 
@@ -89,7 +89,7 @@ INSERT INTO `user` (`identifier`, `user_name`, `password`, `token`, `token_issue
 --
 ALTER TABLE `kafka_offsets`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `unique_topic` (`topic`(20)),
+  ADD UNIQUE KEY `unique_topic` (`topic`,`topic_partition`),
   ADD KEY `topic` (`topic`);
 
 --
@@ -114,14 +114,14 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `kafka_offsets`
 --
 ALTER TABLE `kafka_offsets`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `stream`
 --
 ALTER TABLE `stream`
-  MODIFY `tmp` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `tmp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `tmp` int(3) NOT NULL AUTO_INCREMENT; COMMIT;
+  MODIFY `tmp` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT;COMMIT;
