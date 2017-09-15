@@ -114,14 +114,14 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `kafka_offsets`
 --
 ALTER TABLE `kafka_offsets`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, 1;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `stream`
 --
 ALTER TABLE `stream`
-  MODIFY `tmp` int(11) NOT NULL AUTO_INCREMENT, 1;
+  MODIFY `tmp` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `tmp` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;COMMIT;
+  MODIFY `tmp` int(3) NOT NULL AUTO_INCREMENT; COMMIT;
