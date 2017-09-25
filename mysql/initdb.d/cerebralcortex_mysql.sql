@@ -63,7 +63,7 @@ CREATE TABLE `stream` (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `identifier` varchar(36) NOT NULL,
-  `user_name` varchar(80) NOT NULL,
+  `username` varchar(80) NOT NULL,
   `password` varchar(100) NOT NULL,
   `token` text NOT NULL,
   `token_issued` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -77,7 +77,7 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`identifier`, `user_name`, `password`, `token`, `token_issued`, `token_expiry`, `type`, `metadata`, `tmp`) VALUES
+INSERT INTO `user` (`identifier`, `username`, `password`, `token`, `token_issued`, `token_expiry`, `type`, `metadata`, `tmp`) VALUES
 ('123', 'string', 'string', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MiLCJ1c2VyX2NsYWltcyI6e30sImlhdCI6MTUwNDExNjY2MCwibmJmIjoxNTA0MTE2NjYwLCJleHAiOjE1MDQxMTcwNjAsImp0aSI6Ijk4ZDcyNjc1LWZhN2QtNDE3NS1hYWRlLWFkNTdiNTBjMmRhYyIsImlkZW50aXR5Ijoic3RyaW5nIn0.JlkE2YFeGbQxzxp3ikPhuh90xbonL2B-hZyCqevLe0w', '2017-08-30 13:11:00', '2017-08-30 13:17:40', 'md2k', '{}', 1);
 
 --
