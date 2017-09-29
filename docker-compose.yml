@@ -59,7 +59,7 @@ services:
     container_name: md2k-grafana
     restart: always
     ports:
-      - 3000
+      - "3000:3000"
     links:
       - influxdb
     environment:
@@ -74,7 +74,7 @@ services:
     container_name: md2k-influxdb
     restart: always
     ports:
-      - 8086
+      - "8086:8086"
     volumes:
       - timeseries-storage:/var/lib/influxdb
 
