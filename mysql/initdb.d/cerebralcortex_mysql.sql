@@ -82,6 +82,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`identifier`, `username`, `password`, `token`, `token_issued`, `token_expiry`, `user_role`, `user_metadata`, `active`, `confirmed_at`, `tmp_id`) VALUES
 ('d41b83dc-a22e-11e7-abc4-cec278b6b50a', 'string', '473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8', NULL, '2017-09-28 23:08:29', '2017-09-28 23:08:29', 'demo', '{}', 1, NULL, 1);
 
+
 --
 -- Indexes for dumped tables
 --
@@ -127,3 +128,7 @@ ALTER TABLE `stream`
 --
 ALTER TABLE `user`
   MODIFY `tmp_id` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4614dba0b5d218fe711c8914eff0c64b4758c1bc

@@ -60,6 +60,10 @@ services:
     restart: always
     ports:
       - "3000:3000"
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4614dba0b5d218fe711c8914eff0c64b4758c1bc
     links:
       - influxdb
     environment:
