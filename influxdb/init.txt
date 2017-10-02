@@ -1,0 +1,14 @@
+CREATE DATABASE "cerebralcortex_raw";
+CREATE DATABASE "cerebralcortex_1hour";
+CREATE DATABASE "cerebralcortex_1minute";
+
+use "cerebralcortex_1minute";
+CREATE RETENTION POLICY "7days" ON "cerebralcortex_1minute" DURATION 7d REPLICATION 1 DEFAULT
+use "cerebralcortex_1hour";
+CREATE RETENTION POLICY "7days" ON "cerebralcortex_1hour" DURATION 7d REPLICATION 1 DEFAULT
+
+use "cerebralcortex_raw";
+CREATE RETENTION POLICY "7days" ON "cerebralcortex_raw" DURATION 7d REPLICATION 1 DEFAULT
+
+CREATE CONTINUOUS QUERY "1minute_window" ON "cerebralcortex_raw" RESAMPLE EVERY 1m BEGIN SELECT count(*::field) AS "count", mean(*::field) as "mean" INTO "cerebralcortex_1minute"."7days".:MEASUREMENT FROM /.*/ GROUP BY time(1m) END
+CREATE CONTINUOUS QUERY "1hour_window" ON "cerebralcortex_raw" RESAMPLE EVERY 1h BEGIN SELECT count(*::field) AS "count", mean(*::field) as "mean" INTO "cerebralcortex_1hour"."7days".:MEASUREMENT FROM /.*/ GROUP BY time(1h) END
