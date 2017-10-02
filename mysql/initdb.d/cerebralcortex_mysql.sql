@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 15, 2017 at 12:00 PM
+-- Generation Time: Sep 28, 2017 at 11:09 PM
 -- Server version: 5.7.19-0ubuntu0.16.04.1
 -- PHP Version: 7.0.22-0ubuntu0.16.04.1
 
@@ -62,23 +62,26 @@ CREATE TABLE `stream` (
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `identifier` varchar(36) NOT NULL,
-  `username` varchar(80) NOT NULL,
-  `password` varchar(100) NOT NULL,
-  `token` text NOT NULL,
-  `token_issued` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `token_expiry` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `type` varchar(36) NOT NULL,
-  `metadata` json NOT NULL,
-  `tmp` int(3) NOT NULL
+  `identifier` varchar(40) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `token` text,
+  `token_issued` datetime DEFAULT CURRENT_TIMESTAMP,
+  `token_expiry` datetime DEFAULT CURRENT_TIMESTAMP,
+  `user_role` varchar(255) DEFAULT NULL,
+  `user_metadata` json DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '0',
+  `confirmed_at` datetime DEFAULT NULL,
+  `tmp_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`identifier`, `username`, `password`, `token`, `token_issued`, `token_expiry`, `type`, `metadata`, `tmp`) VALUES
-('d41b83dc-a22e-11e7-abc4-cec278b6b50a', 'string', '473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MiLCJ1c2VyX2NsYWltcyI6e30sImlhdCI6MTUwNDExNjY2MCwibmJmIjoxNTA0MTE2NjYwLCJleHAiOjE1MDQxMTcwNjAsImp0aSI6Ijk4ZDcyNjc1LWZhN2QtNDE3NS1hYWRlLWFkNTdiNTBjMmRhYyIsImlkZW50aXR5Ijoic3RyaW5nIn0.JlkE2YFeGbQxzxp3ikPhuh90xbonL2B-hZyCqevLe0w', '2017-08-30 13:11:00', '2017-08-30 13:17:40', 'md2k', '{}', 1);
+INSERT INTO `user` (`identifier`, `username`, `password`, `token`, `token_issued`, `token_expiry`, `user_role`, `user_metadata`, `active`, `confirmed_at`, `tmp_id`) VALUES
+('d41b83dc-a22e-11e7-abc4-cec278b6b50a', 'string', '473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8', NULL, '2017-09-28 23:08:29', '2017-09-28 23:08:29', 'demo', '{}', 1, NULL, 1);
+
 
 --
 -- Indexes for dumped tables
@@ -103,8 +106,8 @@ ALTER TABLE `stream`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`tmp`),
-  ADD KEY `UUID` (`identifier`);
+  ADD PRIMARY KEY (`tmp_id`),
+  ADD UNIQUE KEY `user_name` (`username`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -124,4 +127,5 @@ ALTER TABLE `stream`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `tmp` int(3) NOT NULL AUTO_INCREMENT;COMMIT;
+  MODIFY `tmp_id` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
+
