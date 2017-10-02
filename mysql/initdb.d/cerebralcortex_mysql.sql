@@ -128,7 +128,3 @@ ALTER TABLE `stream`
 --
 ALTER TABLE `user`
   MODIFY `tmp_id` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
-<<<<<<< HEAD
-=======
-
->>>>>>> 4614dba0b5d218fe711c8914eff0c64b4758c1bc
