@@ -9,6 +9,6 @@ CREATE DATABASE "cerebralcortex_1minute";
 
 USE cerebralcortex_raw;
 
-CREATE CONTINUOUS QUERY "cq_1min" on "cerebralcortex_raw" RESAMPLE EVERY 15m FOR 2h BEGIN SELECT count(*::field) AS "count", mean(*::field) AS "mean" INTO "cerebralcortex_1minute"."autogen".:MEASUREMENT FROM /.*/ GROUP BY time(1m) END
+CREATE CONTINUOUS QUERY "cq_1min" on "cerebralcortex_raw" RESAMPLE EVERY 15m FOR 2h BEGIN SELECT count(*::field) AS "count", mean(*::field) AS "mean" INTO "cerebralcortex_1minute"."autogen".:MEASUREMENT FROM /.*/ GROUP BY time(1m), owner_id, owner_name, stream_id END
 
-CREATE CONTINUOUS QUERY "cq_1hour" on "cerebralcortex_raw" RESAMPLE EVERY 1h FOR 6h BEGIN SELECT count(*::field) AS "count", mean(*::field) as "mean" INTO "cerebralcortex_1hour"."autogen".:MEASUREMENT FROM /.*/ GROUP BY time(1h) END
+CREATE CONTINUOUS QUERY "cq_1hour" on "cerebralcortex_raw" RESAMPLE EVERY 1h FOR 6h BEGIN SELECT count(*::field) AS "count", mean(*::field) as "mean" INTO "cerebralcortex_1hour"."autogen".:MEASUREMENT FROM /.*/ GROUP BY time(1h), owner_id, owner_name, stream_id END
