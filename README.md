@@ -3,7 +3,7 @@
 ## How to run?
 ### Setup environment
 Minimum requirements:
-* Any Debian Linux Distro (We have tested it on Linux Mint, KDE, and Ubuntu)
+* Any Debian Linux Distro (We have tested it on Centos, Linux Mint, KDE, and Ubuntu)
 
 ### Clone and configure CerebralCortex-DataAnalysis
 * clone https://github.com/MD2Korg/CerebralCortex-DockerCompose.git
