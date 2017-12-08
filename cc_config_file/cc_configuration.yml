@@ -1,0 +1,67 @@
+#########################################################################
+###################### CerebralCortex Core Config #######################
+#########################################################################
+
+cassandra:
+  host: 127.0.0.1
+  port: 9042
+  keyspace: cerebralcortex
+  db_user: ""
+  db_pass: ""
+  datapoint_table: data
+
+influxdb:
+  host: 127.0.0.1
+  port: 8086
+  database: cerebralcortex_raw
+  db_user: ""
+  db_pass: ""
+
+mysql:
+  host: 172.19.0.6
+  port: 3306
+  database: cerebralcortex
+  db_user: root
+  db_pass: random_root_password
+  datastream_table: stream
+  kafka_offsets_table: kafka_offsets
+  processing_module_table: processing_module
+  user_table: user
+  study_table: study
+
+minio:
+  host: 127.0.0.1
+  port: 9000
+  access_key: 'ZngmrLWgbSfZUvgocyeH'
+  secret_key: 'IwUnI5w0f5Hf1v2qVwcr'
+  secure: False #ssl
+
+logging:
+  log_path: '/var/log/cerebralcortex/' # make sure directory is writeable by current OS user
+
+data_ingestion:
+  cassandra_in: True
+  influxdb_in: False
+
+
+#########################################################################
+########################### KAFKA Config ################################
+#########################################################################
+kafkaserver:
+  host: 127.0.0.1
+  port: 9092
+#########################################################################
+################ CerebralCortex API SERVER Config #######################
+#########################################################################
+
+apiserver:
+  host: 0.0.0.0
+  port: 8088
+  secret_key: 'super-secret'
+  token_expire_time: 40000 #seconds
+  debug: True
+
+routes:
+  auth: "auth"
+  stream: "stream"
+  object: "object"
