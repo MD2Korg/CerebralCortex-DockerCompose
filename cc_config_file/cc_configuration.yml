@@ -60,12 +60,9 @@ apiserver:
   secret_key: 'super-secret'
   token_expire_time: 40000 #seconds
   debug: True
+  mode: "development" #acceptable parameters are "production" or "development"
 
 routes:
   auth: "auth"
   stream: "stream"
   object: "object"
-
-#################### TESTING PARAMS ########################
-mode:
-  run: "production"
