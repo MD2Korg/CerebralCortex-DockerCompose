@@ -3,7 +3,7 @@
 #########################################################################
 
 cassandra:
-  host: 127.0.0.1
+  host: cassandra
   port: 9042
   keyspace: cerebralcortex
   db_user: ""
@@ -11,14 +11,14 @@ cassandra:
   datapoint_table: data
 
 influxdb:
-  host: 127.0.0.1
+  host: influxdb
   port: 8086
   database: cerebralcortex_raw
   db_user: ""
   db_pass: ""
 
 mysql:
-  host: 127.0.0.1
+  host: mysql
   port: 3306
   database: cerebralcortex
   db_user: root
@@ -30,7 +30,7 @@ mysql:
   study_table: study
 
 minio:
-  host: 127.0.0.1
+  host: minio
   port: 9000
   access_key: 'ZngmrLWgbSfZUvgocyeH'
   secret_key: 'IwUnI5w0f5Hf1v2qVwcr'
@@ -48,7 +48,7 @@ data_ingestion:
 ########################### KAFKA Config ################################
 #########################################################################
 kafkaserver:
-  host: 127.0.0.1
+  host: kafka
   port: 9092
 #########################################################################
 ################ CerebralCortex API SERVER Config #######################
@@ -66,3 +66,7 @@ routes:
   auth: "auth"
   stream: "stream"
   object: "object"
+
+#################### TESTING PARAMS ########################
+mode:
+  run: "productionss"
