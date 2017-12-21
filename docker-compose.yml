@@ -151,7 +151,7 @@ services:
       - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
     command: server /export
     volumes:
-      - object-storage:/export
+      - ./minio:/export
 
   cassandra:
     build: ./cassandra
