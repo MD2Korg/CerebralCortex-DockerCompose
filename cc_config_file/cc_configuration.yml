@@ -40,7 +40,7 @@ logging:
   log_path: '/var/log/cerebralcortex/' # make sure directory is writeable by current OS user
 
 data_ingestion:
-  cassandra_in: True
+  cassandra_in: True # for now, this cannot be False
   influxdb_in: False
 
 
@@ -48,7 +48,7 @@ data_ingestion:
 ########################### KAFKA Config ################################
 #########################################################################
 kafkaserver:
-  host: kafka
+  host: 10.100.80.31
   port: 9092
 #########################################################################
 ################ CerebralCortex API SERVER Config #######################
@@ -67,6 +67,3 @@ routes:
   stream: "stream"
   object: "object"
 
-#################### TESTING PARAMS ########################
-mode:
-  run: "productionss"
