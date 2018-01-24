@@ -7,7 +7,6 @@ CREATE TABLE cerebralcortex.data (
     day text,
     start_time timestamp,
     end_time timestamp,
-    sample text,
     blob_obj blob,
     PRIMARY KEY ((identifier, day), start_time)
 ) WITH CLUSTERING ORDER BY (start_time ASC)
