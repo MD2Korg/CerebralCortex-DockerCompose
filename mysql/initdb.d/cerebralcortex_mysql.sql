@@ -80,7 +80,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`identifier`, `username`, `password`, `token`, `token_issued`, `token_expiry`, `user_role`, `user_metadata`, `active`, `confirmed_at`, `tmp_id`) VALUES
-('d41b83dc-a22e-11e7-abc4-cec278b6b50a', 'string', '473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8', NULL, '2017-09-28 23:08:29', '2017-09-28 23:08:29', 'demo', '{}', 1, NULL, 1);
+('636fcc1f-8966-4e63-a9df-0cbaa6e9296c', 'string', '473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8', NULL, '2017-09-28 23:08:29', '2017-09-28 23:08:29', 'demo', '{}', 1, NULL, 1);
 
 
 --
