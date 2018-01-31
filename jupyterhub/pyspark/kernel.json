@@ -13,6 +13,6 @@
   "PYTHON_PATH": "/usr/local/spark/python/lib/py4j-0.10.4-src.zip:/usr/local/spark/python/",
   "PYTHONSTARTUP": "/usr/local/spark/python/pyspark/shell.py",
   "PYSPARK_SUBMIT_ARGS": "--master local[*] pyspark-shell",
-  "PYSPARK_PYTHON": "/python3"
+  "PYSPARK_PYTHON": "python3"
  }
 }
