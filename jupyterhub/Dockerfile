@@ -28,6 +28,11 @@ ENV JAVA_HOME	/usr/lib/jvm/java-8-openjre-amd64
 ENV PYSPARK_PYTHON /opt/conda/bin/python3
 ENV PATH        $JAVA_HOME/bin:$SPARK_HOME/bin:$SPARK_HOME/sbin:$PATH
 
+# Install Cerebral Cortex libraries for use in the notebook environment
+RUN git clone https://github.com/MD2Korg/CerebralCortex \
+    && cd CerebralCortex && python3 setup.py install \
+    && cd .. && rm -rf CerebralCortex
+
 
 RUN pip install --upgrade jupyterhub
 RUN pip install jupyter
@@ -35,6 +40,6 @@ RUN pip install jupyter
 RUN mkdir /opt/conda/share/jupyter/kernels/pyspark
 COPY pyspark/kernel.json /opt/conda/share/jupyter/kernels/pyspark/
 
-RUN useradd -m hnat && echo "hnat:hnat" | chpasswd
+RUN useradd -m hnat && echo "md2k:md2k" | chpasswd
 
 VOLUME /srv/jupyterhub/conf
