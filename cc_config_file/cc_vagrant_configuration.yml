@@ -41,7 +41,7 @@ logging:
 
 data_ingestion:
   cassandra_in: True # for now, this cannot be False
-  influxdb_in: False
+  influxdb_in: True
 
 
 #########################################################################
