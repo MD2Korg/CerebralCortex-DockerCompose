@@ -41,7 +41,7 @@ ENV PATH        $JAVA_HOME/bin:$SPARK_HOME/bin:$SPARK_HOME/sbin:$PATH
 
 RUN pip3 install --egg mysql-connector-python-rf
 # Install Cerebral Cortex libraries for use in the notebook environment
-RUN git clone https://github.com/MD2Korg/CerebralCortex \
+RUN git clone https://github.com/MD2Korg/CerebralCortex -b 2.1.2 \
     && cd CerebralCortex \
     && python3 setup.py install \
     && cd .. && rm -rf CerebralCortex

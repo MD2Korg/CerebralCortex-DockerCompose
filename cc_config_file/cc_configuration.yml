@@ -22,6 +22,8 @@ mysql:
   port: 3306
   database: cerebralcortex
   db_user: root
+  connection_pool_name: "CC_Pool"
+  connection_pool_size: 30
   db_pass: random_root_password
   datastream_table: stream
   kafka_offsets_table: kafka_offsets
