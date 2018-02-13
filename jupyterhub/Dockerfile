@@ -39,7 +39,7 @@ ENV JAVA_HOME   /usr/lib/jvm/java-8-openjre-amd64
 ENV PYSPARK_PYTHON /opt/conda/bin/python3
 ENV PATH        $JAVA_HOME/bin:$SPARK_HOME/bin:$SPARK_HOME/sbin:$PATH
 
-RUN pip3 install --egg mysql-connector-python-rf
+RUN pip3 install -U wheel
 # Install Cerebral Cortex libraries for use in the notebook environment
 RUN git clone https://github.com/MD2Korg/CerebralCortex -b 2.1.2 \
     && cd CerebralCortex \

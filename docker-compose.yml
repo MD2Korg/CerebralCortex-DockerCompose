@@ -27,7 +27,8 @@ services:
       - jupyter
 
   apiserver:
-    image: "md2kvagrant/cerebralcortexdockercompose_apiserver:2.1.2"
+    #image: "md2kvagrant/cerebralcortexdockercompose_apiserver:2.1.2"
+    build: "../CerebralCortex-APIServer"
     container_name: md2k-api-server
     restart: always
     expose:
@@ -83,7 +84,8 @@ services:
 
 # Data Science Dashboard Interface
   jupyter:
-    image: "md2kvagrant/cerebralcortexdockercompose_jupyter"
+    #image: "md2kvagrant/cerebralcortexdockercompose_jupyter"
+    build: ./jupyterhub
     container_name: md2k-jupyterhub
     ports:
       - 8000
