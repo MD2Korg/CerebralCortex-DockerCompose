@@ -15,6 +15,7 @@ ENV HADOOP_VERSION 2.7
 
 RUN easy_install pip
 RUN pip install --upgrade pip
+RUN pip3 install wheel
 RUN pip3 install minio==2.2.4
 RUN pip3 install pytz==2017.2
 RUN pip3 install PyYAML==3.12
@@ -39,7 +40,6 @@ ENV JAVA_HOME   /usr/lib/jvm/java-8-openjre-amd64
 ENV PYSPARK_PYTHON /opt/conda/bin/python3
 ENV PATH        $JAVA_HOME/bin:$SPARK_HOME/bin:$SPARK_HOME/sbin:$PATH
 
-RUN pip3 install --egg mysql-connector-python-rf
 # Install Cerebral Cortex libraries for use in the notebook environment
 RUN git clone https://github.com/MD2Korg/CerebralCortex -b 2.1.2 \
     && cd CerebralCortex \
