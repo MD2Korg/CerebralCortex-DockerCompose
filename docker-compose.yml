@@ -21,10 +21,10 @@ services:
     ports:
       - "443:443"
       - "80:80"
-    links:
-      - apiserver
-      - grafana
-      - jupyter
+    # links:
+    #   - apiserver
+    #   - grafana
+    #   - jupyter
 
   apiserver:
     image: "md2kvagrant/apiserver:2.1.2"
