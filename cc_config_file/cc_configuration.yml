@@ -31,11 +31,12 @@ mysql:
   connection_pool_name: "CC_Pool"
   connection_pool_size: 1
   database: cerebralcortex
-  db_user: root
-  db_pass: random_root_password
+  db_user: random_root_password
+  db_pass: pass
   datastream_table: stream
   kafka_offsets_table: kafka_offsets
   processing_module_table: processing_module
+  data_replay_table: data_replay
   user_table: user
   study_table: study
 
@@ -45,9 +46,6 @@ minio:
   access_key: 'eiyLwkdFUnCw2V48KiUR'
   secret_key: '4W6gs8eyOEMmVIj1pBhc'
   secure: False #ssl
-
-logging:
-  log_path: '/var/log/cerebralcortex/' # make sure directory is writeable by current OS user
 
 data_ingestion:
   influxdb_in: False
@@ -132,7 +130,3 @@ routes:
   auth: "auth"
   stream: "stream"
   object: "object"
-
-#################### TESTING PARAMS ########################
-mode:
-  run: "productionss"
