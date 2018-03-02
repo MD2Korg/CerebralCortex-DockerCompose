@@ -37,6 +37,7 @@ mysql:
   datastream_table: stream
   kafka_offsets_table: kafka_offsets
   processing_module_table: processing_module
+  data_replay_table: data_replay
   user_table: user
   study_table: study
 
@@ -46,9 +47,6 @@ minio:
   access_key: 'eiyLwkdFUnCw2V48KiUR'
   secret_key: '4W6gs8eyOEMmVIj1pBhc'
   secure: False #ssl
-
-logging:
-  log_path: '/var/log/cerebralcortex/' # make sure directory is writeable by current OS user
 
 data_ingestion:
   influxdb_in: False
@@ -134,6 +132,19 @@ routes:
   stream: "stream"
   object: "object"
 
-#################### TESTING PARAMS ########################
-mode:
-  run: "productionss"
+
+#########################################################################
+###################### DATA REPLAY CONFIGS ##############################
+#########################################################################
+data_replay:
+  replay_type: "mydb" # acceptable parameters are filez OR mydb
+  data_dir: "/home/ali/IdeaProjects/MD2K_DATA/data/"
+
+users:
+  uuids: "" # if no UUID specified then all users data will be replayed
+
+blacklist: #only works for "mydb" replay_type
+  regzex:
+    re1: '^BEACON--org.md2k.beacon--BEACON--([0-9A-F]+:){5}[0-9A-F]+$' # mysql supported regex only
+  txt_match:
+    tm1: 'RAW--org.md2k.motionsense--' #partial string matching, multiple are allowed
