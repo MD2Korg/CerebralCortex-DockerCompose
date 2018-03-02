@@ -143,7 +143,8 @@ users:
   uuids: "" # if no UUID specified then all users data will be replayed
 
 blacklist: #only works for "mydb" replay_type
-  regzex:
-    re1: '^BEACON--org.md2k.beacon--BEACON--([0-9A-F]+:){5}[0-9A-F]+$' # mysql supported regex only
-  txt_match:
-    tm1: 'RAW--org.md2k.motionsense--' #partial string matching, multiple are allowed
+  regzex: # mysql supported regex only
+    re1: '^BEACON--org.md2k.beacon--BEACON--([0-9A-F]+:){5}[0-9A-F]+$'
+  txt_match:  #partial string matching, multiple are allowed
+    tm1: 'RAW--org.md2k.%'
+    tm2: 'CU_AUDIO_FEATURE--%'
