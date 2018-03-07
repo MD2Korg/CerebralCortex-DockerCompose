@@ -83,7 +83,7 @@ services:
 
 # Data Science Dashboard Interface
   jupyter:
-    image: "md2kvagrant/cerebralcortexdockercompose_jupyter2.2.1"
+    image: "md2kvagrant/cerebralcortexdockercompose_jupyter:2.2.1"
     container_name: md2k-jupyterhub
     ports:
       - 8000
