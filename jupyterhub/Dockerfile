@@ -19,6 +19,7 @@ RUN pip3 install wheel
 RUN pip3 install minio==2.2.4
 RUN pip3 install pytz==2017.2
 RUN pip3 install PyYAML==3.12
+RUN pip3 install pyarrow==0.8.0
 RUN pip3 install cassandra-driver==3.12.0
 RUN pip3 install kafka
 RUN pip3 install influxdb==5.0.0
@@ -41,7 +42,7 @@ ENV PYSPARK_PYTHON /opt/conda/bin/python3
 ENV PATH        $JAVA_HOME/bin:$SPARK_HOME/bin:$SPARK_HOME/sbin:$PATH
 
 # Install Cerebral Cortex libraries for use in the notebook environment
-RUN git clone https://github.com/MD2Korg/CerebralCortex -b 2.1.2 \
+RUN git clone https://github.com/MD2Korg/CerebralCortex -b 2.2.1 \
     && cd CerebralCortex \
     && python3 setup.py install \
     && cd .. && rm -rf CerebralCortex
