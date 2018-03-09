@@ -1,6 +1,8 @@
 #########################################################################
 ###################### CerebralCortex Core Config #######################
 #########################################################################
+cc:
+  debug: True # Setting this to True will log and print errors on console as well
 
 cassandra:
   host: 127.0.0.1
