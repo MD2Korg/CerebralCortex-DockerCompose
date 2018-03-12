@@ -5,7 +5,7 @@ cc:
   debug: True # Setting this to True will log and print errors on console as well
 
 cassandra:
-  host: 127.0.0.1
+  host: cassandra
   port: 9042
   keyspace: cerebralcortex
   db_user: ""
@@ -14,27 +14,28 @@ cassandra:
 
 hdfs:
   host: 127.0.0.1
-  port: 9009
-  raw_files_dir: ""
+  port: 9001
+  raw_files_dir: "/cerebralcortex/data/"
+  #raw_files_dir: ""
   hdfs_user: ""
   hdfs_kerb_ticket: ""
 
 
 influxdb:
-  host: 127.0.0.1
+  host: influxdb
   port: 8086
   database: cerebralcortex_raw
   db_user: ""
   db_pass: ""
 
 mysql:
-  host: 127.0.0.1
+  host: mysql
   port: 3306
   connection_pool_name: "CC_Pool"
   connection_pool_size: 1
   database: cerebralcortex
   db_user: root
-  db_pass: pass
+  db_pass: random_root_password
   datastream_table: stream
   kafka_offsets_table: kafka_offsets
   processing_module_table: processing_module
@@ -43,7 +44,7 @@ mysql:
   study_table: study
 
 minio:
-  host: 127.0.0.1
+  host: minio
   port: 9000
   access_key: 'eiyLwkdFUnCw2V48KiUR'
   secret_key: '4W6gs8eyOEMmVIj1pBhc'
@@ -52,7 +53,7 @@ minio:
 data_ingestion:
   influxdb_in: False
   nosql_in: True
-  nosql_store: "hdfs" # acceptable parameters are: cassandra, scylladb, hdfs
+  nosql_store: "cassandra" # acceptable parameters are: cassandra, scylladb, hdfs
 
 influxdb_blacklist: # influxdb data ingestion pipeline will not process stream names defined here
   ibl1: "ACCELEROMETER--org.md2k.motionsense--MOTION_SENSE_HRV--LEFT_WRIST"
@@ -139,14 +140,13 @@ routes:
 #########################################################################
 data_replay:
   replay_type: "mydb" # acceptable parameters are filez OR mydb
-  data_dir: "/home/ali/IdeaProjects/MD2K_DATA/data/"
+  data_dir: "/home/vagrant/CerebralCortex-DockerCompose/data/"
 
 users:
   uuids: "" # if no UUID specified then all users data will be replayed
 
 blacklist: #only works for "mydb" replay_type
-  regzex: # mysql supported regex only
-    re1: '^BEACON--org.md2k.beacon--BEACON--([0-9A-F]+:){5}[0-9A-F]+$'
-  txt_match:  #partial string matching, multiple are allowed
-    tm1: 'RAW--org.md2k.%'
-    tm2: 'CU_AUDIO_FEATURE--%'
+  regzex:
+    re1: '^BEACON--org.md2k.beacon--BEACON--([0-9A-F]+:){5}[0-9A-F]+$' # mysql supported regex only
+  txt_match:
+    tm1: 'RAW--org.md2k.%' #partial string matching, multiple are allowed

@@ -27,7 +27,7 @@ services:
       - jupyter
 
   apiserver:
-    image: "md2kvagrant/cerebralcortexdockercompose_apiserver:2.2.1"
+    image: "md2kvagrant/cerebralcortexdockercompose_apiserver:2.2.1.2"
     container_name: md2k-api-server
     restart: always
     expose:

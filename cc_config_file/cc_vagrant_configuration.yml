@@ -5,7 +5,7 @@ cc:
   debug: True # Setting this to True will log and print errors on console as well
 
 cassandra:
-  host: 127.0.0.1
+  host: cassandra
   port: 9042
   keyspace: cerebralcortex
   db_user: ""
@@ -22,14 +22,14 @@ hdfs:
 
 
 influxdb:
-  host: 127.0.0.1
+  host: influxdb
   port: 8086
   database: cerebralcortex_raw
   db_user: ""
   db_pass: ""
 
 mysql:
-  host: 127.0.0.1
+  host: mysql
   port: 3306
   connection_pool_name: "CC_Pool"
   connection_pool_size: 1
@@ -44,7 +44,7 @@ mysql:
   study_table: study
 
 minio:
-  host: 127.0.0.1
+  host: minio
   port: 9000
   access_key: 'eiyLwkdFUnCw2V48KiUR'
   secret_key: '4W6gs8eyOEMmVIj1pBhc'
