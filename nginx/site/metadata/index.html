@@ -34,8 +34,20 @@ $(document).ready(function () {
         output+="</tr></thead><tbody>"
         for (var i in result)
         {
-          // output+="<li style='padding-bottom: .8em'><button data-toggle='collapse' data-target='#ds" + i + "' class='btn btn-info btn-sm'>" + "Expand" + "</button>" + result[i].name + result[i].execution_context.application_metadata.DESCRIPTION +  "<br />"
-          output+="<tr><th scope='row'>" + i + "</th><td>" + result[i].name + "</td><td>" + result[i].execution_context.datasource_metadata.DESCRIPTION +  "</td><td><button data-toggle='collapse' data-target='#ds" + i + "' class='btn btn-info btn-sm'>" + "Expand" + "</button></td></tr>"
+          output+="<tr><th scope='row'>" + i + "</th><td>" + result[i].name + "</td><td>"
+
+	  try {
+	     output+= result[i].execution_context.datasource_metadata.DESCRIPTION 
+	  } catch (err) {
+	     try {
+	         output+= result[i].execution_context.algorithm.description
+	     } catch (err2) {
+                 output+= "UNDEFINED"
+	     }
+	  }
+
+	  output+= "</td><td><button data-toggle='collapse' data-target='#ds" + i + "' class='btn btn-info btn-sm'>" + "Expand" + "</button></td></tr>"
+
           output+="<tr id='ds" + i + "' class='collapse'><td colspan=3>"
 
           output+="<h2>DataStream Name</h2>" + result[i].name
