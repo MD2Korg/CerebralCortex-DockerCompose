@@ -46,14 +46,15 @@ mysql:
 minio:
   host: minio
   port: 9000
-  access_key: 'eiyLwkdFUnCw2V48KiUR'
-  secret_key: '4W6gs8eyOEMmVIj1pBhc'
+  access_key: 'ZngmrLWgbSfZUvgocyeH'
+  secret_key: 'IwUnI5w0f5Hf1v2qVwcr'
   secure: False #ssl
 
 data_ingestion:
   influxdb_in: False
   nosql_in: True
-  nosql_store: "cassandra" # acceptable parameters are: cassandra, scylladb, hdfs
+  nosql_store: "hdfs" # acceptable parameters are: cassandra, scylladb, hdfs, filesystem
+  filesystem_path: "/home/ali/IdeaProjects/MD2K_DATA/data/test/" # in case of nosql_store=filesystem, provide directory path where data shall be stored
 
 influxdb_blacklist: # influxdb data ingestion pipeline will not process stream names defined here
   ibl1: "ACCELEROMETER--org.md2k.motionsense--MOTION_SENSE_HRV--LEFT_WRIST"
@@ -116,7 +117,7 @@ influxdb_blacklist: # influxdb data ingestion pipeline will not process stream n
 ########################### KAFKA Config ################################
 #########################################################################
 kafkaserver:
-  host: 127.0.0.1
+  host: 141.225.42.174
   port: 9092
 #########################################################################
 ################ CerebralCortex API SERVER Config #######################
