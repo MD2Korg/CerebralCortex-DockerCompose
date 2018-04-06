@@ -53,7 +53,8 @@ minio:
 data_ingestion:
   influxdb_in: False
   nosql_in: True
-  nosql_store: "cassandra" # acceptable parameters are: cassandra, scylladb, hdfs
+  nosql_store: "filesystem" # acceptable parameters are: cassandra, scylladb, hdfs, filesystem
+  filesystem_path: "/vagrant" # in case of nosql_store=filesystem, provide directory path where data shall be stored
 
 influxdb_blacklist: # influxdb data ingestion pipeline will not process stream names defined here
   ibl1: "ACCELEROMETER--org.md2k.motionsense--MOTION_SENSE_HRV--LEFT_WRIST"
