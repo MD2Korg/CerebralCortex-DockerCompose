@@ -44,7 +44,7 @@ services:
       - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
       - MYSQL_HOST=${MYSQL:-mysql}
       - MYSQL_DB_USER=${MYSQL_ROOT_USER:-root}
-      - MYSQL_DB_PASS=${MYSQL_ROOT_PASSWORD:-random_root_password}
+      - MYSQL_DB_PASS=${MYSQL_ROOT_PASSWORD:-pass}
       - KAFKA_HOST=${KAFKA_HOST:-kafka}
       - JWT_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
       - FLASK_HOST=${FLASK_HOST:-0.0.0.0}
