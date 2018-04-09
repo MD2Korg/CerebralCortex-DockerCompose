@@ -5,7 +5,7 @@ cc:
   debug: True # Setting this to True will log and print errors on console as well
 
 cassandra:
-  host: cassandra
+  host: 127.0.0.1
   port: 9042
   keyspace: cerebralcortex
   db_user: ""
@@ -22,14 +22,14 @@ hdfs:
 
 
 influxdb:
-  host: influxdb
+  host: 127.0.0.1
   port: 8086
   database: cerebralcortex_raw
   db_user: ""
   db_pass: ""
 
 mysql:
-  host: mysql
+  host: 127.0.0.1
   port: 3306
   connection_pool_name: "CC_Pool"
   connection_pool_size: 1
@@ -44,7 +44,7 @@ mysql:
   study_table: study
 
 minio:
-  host: minio
+  host: 127.0.0.1
   port: 9000
   access_key: 'ZngmrLWgbSfZUvgocyeH'
   secret_key: 'IwUnI5w0f5Hf1v2qVwcr'
@@ -117,7 +117,7 @@ influxdb_blacklist: # influxdb data ingestion pipeline will not process stream n
 ########################### KAFKA Config ################################
 #########################################################################
 kafkaserver:
-  host: 141.225.42.174
+  host: 127.0.0.1
   port: 9092
 #########################################################################
 ################ CerebralCortex API SERVER Config #######################

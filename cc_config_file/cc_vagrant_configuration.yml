@@ -5,7 +5,7 @@ cc:
   debug: True # Setting this to True will log and print errors on console as well
 
 cassandra:
-  host: cassandra
+  host: 127.0.0.1
   port: 9042
   keyspace: cerebralcortex
   db_user: ""
@@ -22,14 +22,14 @@ hdfs:
 
 
 influxdb:
-  host: influxdb
+  host: 127.0.0.1
   port: 8086
   database: cerebralcortex_raw
   db_user: ""
   db_pass: ""
 
 mysql:
-  host: mysql
+  host: 127.0.0.1
   port: 3306
   connection_pool_name: "CC_Pool"
   connection_pool_size: 1
@@ -39,12 +39,12 @@ mysql:
   datastream_table: stream
   kafka_offsets_table: kafka_offsets
   processing_module_table: processing_module
-  data_replay_table: data_replay
+  data_replay_table: data_replay_md2k2
   user_table: user
   study_table: study
 
 minio:
-  host: minio
+  host: 127.0.0.1
   port: 9000
   access_key: 'ZngmrLWgbSfZUvgocyeH'
   secret_key: 'IwUnI5w0f5Hf1v2qVwcr'
@@ -54,7 +54,7 @@ data_ingestion:
   influxdb_in: False
   nosql_in: True
   nosql_store: "filesystem" # acceptable parameters are: cassandra, scylladb, hdfs, filesystem
-  filesystem_path: "/vagrant" # in case of nosql_store=filesystem, provide directory path where data shall be stored
+  filesystem_path: "/vagrant/" # in case of nosql_store=filesystem, provide directory path where data shall be stored
 
 influxdb_blacklist: # influxdb data ingestion pipeline will not process stream names defined here
   ibl1: "ACCELEROMETER--org.md2k.motionsense--MOTION_SENSE_HRV--LEFT_WRIST"

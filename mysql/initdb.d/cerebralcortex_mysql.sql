@@ -162,3 +162,37 @@ ALTER TABLE `data_replay`
 --
 ALTER TABLE `data_replay`
   MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
+
+DROP TABLE IF EXISTS `data_replay_md2k2`;
+CREATE TABLE `data_replay_md2k2` (
+  `id` int(20) NOT NULL,
+  `owner_id` varchar(40) NOT NULL,
+  `stream_id` varchar(256) NOT NULL,
+  `stream_name` varchar(255) NOT NULL,
+  `day` varchar(12) NOT NULL,
+  `files_list` json NOT NULL,
+  `dir_size` int(10) NOT NULL,
+  `metadata` json NOT NULL,
+  `processed` int(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `data_replay_md2k2`
+--
+ALTER TABLE `data_replay_md2k2`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `owner_id` (`owner_id`,`stream_id`,`day`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `data_replay_md2k2`
+--
+ALTER TABLE `data_replay_md2k2`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
