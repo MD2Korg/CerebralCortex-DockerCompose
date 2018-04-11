@@ -130,7 +130,7 @@ services:
     ports:
       - 3306:3306 # Default mysql port
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-random_root_password}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-pass}
       - MYSQL_DATABASE=${MYSQL_DATABASE:-cerebralcortex}
       - MYSQL_USER=${MYSQL_USER:-cerebralcortex}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-cerebralcortex_pass}
