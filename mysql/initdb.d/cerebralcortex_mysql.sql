@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.1
+-- version 4.6.6deb5
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Sep 28, 2017 at 11:09 PM
--- Server version: 5.7.19-0ubuntu0.16.04.1
--- PHP Version: 7.0.22-0ubuntu0.16.04.1
+-- Host: localhost:3306
+-- Generation Time: Apr 12, 2018 at 12:41 PM
+-- Server version: 5.7.21-0ubuntu0.17.10.1
+-- PHP Version: 7.1.15-0ubuntu0.17.10.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 --
@@ -17,6 +15,44 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `cerebralcortex` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `cerebralcortex`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `data_replay`
+--
+
+DROP TABLE IF EXISTS `data_replay`;
+CREATE TABLE `data_replay` (
+  `id` int(20) NOT NULL,
+  `owner_id` varchar(40) NOT NULL,
+  `stream_id` varchar(256) NOT NULL,
+  `stream_name` varchar(255) NOT NULL,
+  `day` varchar(12) NOT NULL,
+  `files_list` json NOT NULL,
+  `dir_size` int(10) NOT NULL,
+  `metadata` json NOT NULL,
+  `processed` int(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `data_replay_md2k2`
+--
+
+DROP TABLE IF EXISTS `data_replay_md2k2`;
+CREATE TABLE `data_replay_md2k2` (
+  `id` int(20) NOT NULL,
+  `owner_id` varchar(40) NOT NULL,
+  `stream_id` varchar(256) NOT NULL,
+  `stream_name` varchar(255) NOT NULL,
+  `day` varchar(12) NOT NULL,
+  `files_list` json NOT NULL,
+  `dir_size` int(10) NOT NULL,
+  `metadata` json NOT NULL,
+  `processed` int(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -82,10 +118,23 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`identifier`, `username`, `password`, `token`, `token_issued`, `token_expiry`, `user_role`, `user_metadata`, `active`, `confirmed_at`, `tmp_id`) VALUES
 ('636fcc1f-8966-4e63-a9df-0cbaa6e9296c', 'string', '473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8', NULL, '2017-09-28 23:08:29', '2017-09-28 23:08:29', 'demo', '{}', 1, NULL, 1);
 
-
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `data_replay`
+--
+ALTER TABLE `data_replay`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `owner_id` (`owner_id`,`stream_id`,`day`);
+
+--
+-- Indexes for table `data_replay_md2k2`
+--
+ALTER TABLE `data_replay_md2k2`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `owner_id` (`owner_id`,`stream_id`,`day`);
 
 --
 -- Indexes for table `kafka_offsets`
@@ -100,19 +149,32 @@ ALTER TABLE `kafka_offsets`
 --
 ALTER TABLE `stream`
   ADD PRIMARY KEY (`tmp`),
-  ADD KEY `UUID` (`identifier`);
+  ADD KEY `UUID` (`identifier`),
+  ADD KEY `name` (`name`),
+  ADD KEY `owner` (`owner`);
 
 --
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`tmp_id`),
-  ADD UNIQUE KEY `user_name` (`username`);
+  ADD UNIQUE KEY `user_name` (`username`),
+  ADD KEY `identifier` (`identifier`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `data_replay`
+--
+ALTER TABLE `data_replay`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `data_replay_md2k2`
+--
+ALTER TABLE `data_replay_md2k2`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `kafka_offsets`
 --
@@ -127,72 +189,4 @@ ALTER TABLE `stream`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `tmp_id` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
-
-DROP TABLE IF EXISTS `data_replay`;
-CREATE TABLE `data_replay` (
-  `id` int(20) NOT NULL,
-  `owner_id` varchar(40) NOT NULL,
-  `stream_id` varchar(256) NOT NULL,
-  `stream_name` varchar(255) NOT NULL,
-  `day` varchar(12) NOT NULL,
-  `files_list` json NOT NULL,
-  `dir_size` int(10) NOT NULL,
-  `metadata` json NOT NULL,
-  `processed` int(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `data_replay`
---
-ALTER TABLE `data_replay`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `owner_id` (`owner_id`,`stream_id`,`day`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `data_replay`
---
-ALTER TABLE `data_replay`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
-
-DROP TABLE IF EXISTS `data_replay_md2k2`;
-CREATE TABLE `data_replay_md2k2` (
-  `id` int(20) NOT NULL,
-  `owner_id` varchar(40) NOT NULL,
-  `stream_id` varchar(256) NOT NULL,
-  `stream_name` varchar(255) NOT NULL,
-  `day` varchar(12) NOT NULL,
-  `files_list` json NOT NULL,
-  `dir_size` int(10) NOT NULL,
-  `metadata` json NOT NULL,
-  `processed` int(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `data_replay_md2k2`
---
-ALTER TABLE `data_replay_md2k2`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `owner_id` (`owner_id`,`stream_id`,`day`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `data_replay_md2k2`
---
-ALTER TABLE `data_replay_md2k2`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `tmp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
