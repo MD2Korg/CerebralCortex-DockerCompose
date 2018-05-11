@@ -141,8 +141,8 @@ routes:
 ###################### DATA REPLAY CONFIGS ##############################
 #########################################################################
 data_replay:
-  replay_type: "filez" # acceptable parameters are filez OR mydb
-  data_dir: "/home/ali/IdeaProjects/MD2K_DATA/data/test/"
+  replay_type: "mydb" # acceptable parameters are filez OR mydb
+  data_dir: "/home/vagrant/CerebralCortex-DockerCompose/data/"
 
 users:
   uuids: "" # if no UUID specified then all users data will be replayed
