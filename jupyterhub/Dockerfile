@@ -1,9 +1,15 @@
-FROM jupyter/jupyterhub
+FROM jupyterhub/jupyterhub
 MAINTAINER Timothy Hnat twhnat@memphis.edu
 
-RUN echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/sources.list && \
-    apt-get -yqq update && \
-    apt-get install -t jessie-backports -yqq openjdk-8-jre python3-setuptools libyaml-dev libev-dev liblapack-dev && \
+# RUN echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/sources.list && \
+#     apt-get -yqq update && \
+#     apt-get install -t jessie-backports -yqq openjdk-8-jre python3-setuptools libyaml-dev libev-dev liblapack-dev && \
+#     apt-get clean && \
+#     rm -rf /var/lib/apt/lists/* && \
+#     rm -rf /tmp/*
+
+RUN apt-get -yqq update && \
+    apt-get install -yqq openjdk-8-jre python3-setuptools libyaml-dev libev-dev liblapack-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/*
@@ -13,8 +19,8 @@ RUN echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/s
 ENV APACHE_SPARK_VERSION 2.2.0
 ENV HADOOP_VERSION 2.7
 
-RUN easy_install pip
-RUN pip install --upgrade pip
+RUN easy_install pip==9.0.3
+# RUN pip install --upgrade pip
 RUN pip3 install wheel
 RUN pip3 install minio==2.2.4
 RUN pip3 install pytz==2017.2
