@@ -3,6 +3,7 @@
 #########################################################################
 cc:
   debug: True # Setting this to True will log and print errors on console as well
+  throw_exception: False #if this is set to True then application will get exceptions
 
 cassandra:
   host: 127.0.0.1
@@ -33,7 +34,7 @@ mysql:
   port: 3306
   connection_pool_name: "CC_Pool"
   connection_pool_size: 1
-  database: cerebralcortex
+  database: cerebralcortex_server
   db_user: root
   db_pass: pass
   datastream_table: stream
@@ -140,8 +141,8 @@ routes:
 ###################### DATA REPLAY CONFIGS ##############################
 #########################################################################
 data_replay:
-  replay_type: "mydb" # acceptable parameters are filez OR mydb
-  data_dir: "/home/vagrant/CerebralCortex-DockerCompose/data/"
+  replay_type: "filez" # acceptable parameters are filez OR mydb
+  data_dir: "/home/ali/IdeaProjects/MD2K_DATA/data/test/"
 
 users:
   uuids: "" # if no UUID specified then all users data will be replayed
