@@ -34,7 +34,7 @@ mysql:
   port: 3306
   connection_pool_name: "CC_Pool"
   connection_pool_size: 1
-  database: cerebralcortex_server
+  database: cerebralcortex
   db_user: root
   db_pass: pass
   datastream_table: stream
