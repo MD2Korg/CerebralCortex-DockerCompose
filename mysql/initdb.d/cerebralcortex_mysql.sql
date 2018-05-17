@@ -112,6 +112,17 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
+-- Table structure for table `cc_cache`
+--
+
+DROP TABLE IF EXISTS `cc_cache`;
+CREATE TABLE `cc_cache` (
+      `cache_key` varchar(255) NOT NULL,
+      `cache_value` text,
+      PRIMARY KEY (`cache_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
 -- Dumping data for table `user`
 --
 
