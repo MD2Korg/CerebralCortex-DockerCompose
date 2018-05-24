@@ -154,17 +154,17 @@ services:
     volumes:
       - ./minio:/export
 
-#  cassandra:
-#    build: ./cassandra
-#    container_name: md2k-cassandra
-#    restart: always
-#    ports:
-#      - 9160:9160 # Thrift client API
-#      - 9042:9042 # CQL native transport
-#    environment:
-#      - CASSANDRA_CLUSTER_NAME=cerebralcortex
-#    volumes:
-#      - data-storage:/var/lib/cassandra
+  cassandra:
+    build: ./cassandra
+    container_name: md2k-cassandra
+    restart: always
+    ports:
+      - 9160:9160 # Thrift client API
+      - 9042:9042 # CQL native transport
+    environment:
+      - CASSANDRA_CLUSTER_NAME=cerebralcortex
+    volumes:
+      - data-storage:/var/lib/cassandra
 
 
 volumes:
