@@ -52,7 +52,7 @@ minio:
   secure: False #ssl
 
 data_ingestion:
-  influxdb_in: False
+  influxdb_in: True
   nosql_in: True
   nosql_store: "filesystem" # acceptable parameters are: cassandra, scylladb, hdfs, filesystem
   filesystem_path: "/home/vagrant/processed_data/" # in case of nosql_store=filesystem, provide directory path where data shall be stored
