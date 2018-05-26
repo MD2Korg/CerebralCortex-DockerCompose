@@ -55,7 +55,7 @@ data_ingestion:
   influxdb_in: True
   nosql_in: True
   nosql_store: "filesystem" # acceptable parameters are: cassandra, scylladb, hdfs, filesystem
-  filesystem_path: "/home/vagrant/processed_data/" # in case of nosql_store=filesystem, provide directory path where data shall be stored
+  filesystem_path: "/vagrant_data/processed/" # in case of nosql_store=filesystem, provide directory path where data shall be stored
 
 influxdb_blacklist: # influxdb data ingestion pipeline will not process stream names defined here
   ibl1: "ACCELEROMETER--org.md2k.motionsense--MOTION_SENSE_HRV--LEFT_WRIST"

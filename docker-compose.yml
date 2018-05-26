@@ -96,7 +96,7 @@ services:
       - ./jupyterhub/conf:/srv/jupyterhub/conf
       - ./cc_config_file:/home/md2k/cc_config_file
       - ./cc_demo:/home/md2k/cc_demo
-      - /home/vagrant/processed_data:/home/vagrant/processed_data/
+      - /vagrant_data/processed:/vagrant_data/processed
     command: jupyterhub --no-ssl --config /srv/jupyterhub/conf/jupyterhub_config.py
 
 
