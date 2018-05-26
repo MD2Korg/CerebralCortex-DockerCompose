@@ -142,7 +142,7 @@ routes:
 #########################################################################
 data_replay:
   replay_type: "mydb" # acceptable parameters are filez OR mydb
-  data_dir: "/home/vagrant/CerebralCortex-DockerCompose/data/"
+  data_dir: "/vagrant_data/raw/"
 
 users:
   uuids: "" # if no UUID specified then all users data will be replayed
