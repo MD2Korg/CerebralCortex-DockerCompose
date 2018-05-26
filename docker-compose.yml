@@ -66,10 +66,10 @@ services:
       - influxdb
     environment:
       - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:%(http_port)s/grafana/
-      - /vagrant_data/grafana/provisioning:/etc/grafana/provisioning
       # - GF_INSTALL_PLUGINS=raintank-worldping-app,grafana-clock-panel,grafana-simple-json-datasource
     volumes:
       - timeseries-storage:/var/lib/grafana
+      - /vagrant_data/grafana/provisioning:/etc/grafana/provisioning
       # - timeseries-storage:/etc/grafana
 
   influxdb:
@@ -80,8 +80,8 @@ services:
       - "8086:8086"
     volumes:
       - timeseries-storage:/var/lib/influxdb
-    entrypoint:
-      - INFLUXDB_DB="cerebralcortex_raw"
+    environment:
+      - INFLUXDB_DB=cerebralcortex_raw
 
 
 # Data Science Dashboard Interface
