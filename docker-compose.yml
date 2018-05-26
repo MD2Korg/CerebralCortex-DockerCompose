@@ -79,6 +79,8 @@ services:
       - "8086:8086"
     volumes:
       - timeseries-storage:/var/lib/influxdb
+    entrypoint:
+      - INFLUXDB_DB="cerebralcortex_raw"
 
 
 # Data Science Dashboard Interface
