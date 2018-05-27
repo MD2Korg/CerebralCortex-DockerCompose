@@ -1,0 +1,154 @@
+#########################################################################
+###################### CerebralCortex Core Config #######################
+#########################################################################
+cc:
+  debug: True # Setting this to True will log and print errors on console as well
+  throw_exception: False #if this is set to True then application will get exceptions
+
+cassandra:
+  host: 127.0.0.1
+  port: 9042
+  keyspace: cerebralcortex
+  db_user: ""
+  db_pass: ""
+  datapoint_table: data
+
+hdfs:
+  host: 127.0.0.1
+  port: 9001
+  raw_files_dir: "/cerebralcortex/data/"
+  #raw_files_dir: ""
+  hdfs_user: ""
+  hdfs_kerb_ticket: ""
+
+
+influxdb:
+  host: 127.0.0.1
+  port: 8086
+  database: cerebralcortex_raw
+  db_user: ""
+  db_pass: ""
+
+mysql:
+  host: 127.0.0.1
+  port: 3306
+  connection_pool_name: "CC_Pool"
+  connection_pool_size: 1
+  database: cerebralcortex
+  db_user: root
+  db_pass: pass
+  datastream_table: stream
+  kafka_offsets_table: kafka_offsets
+  processing_module_table: processing_module
+  data_replay_table: data_replay
+  user_table: user
+  study_table: study
+
+minio:
+  host: 127.0.0.1
+  port: 9000
+  access_key: 'ZngmrLWgbSfZUvgocyeH'
+  secret_key: 'IwUnI5w0f5Hf1v2qVwcr'
+  secure: False #ssl
+
+data_ingestion:
+  influxdb_in: True
+  nosql_in: True
+  nosql_store: "filesystem" # acceptable parameters are: cassandra, scylladb, hdfs, filesystem
+  filesystem_path: "/home/ali/Desktop/demo/CerebralCortex-Vagrant/data/processed/" # in case of nosql_store=filesystem, provide directory path where data shall be stored
+
+influxdb_blacklist: # influxdb data ingestion pipeline will not process stream names defined here
+  ibl1: "ACCELEROMETER--org.md2k.motionsense--MOTION_SENSE_HRV--LEFT_WRIST"
+  ibl2: "GYROSCOPE--org.md2k.motionsense--MOTION_SENSE_HRV--RIGHT_WRIST"
+  ibl3: "GYROSCOPE--org.md2k.motionsense--MOTION_SENSE_HRV--LEFT_WRIST"
+  ibl4: "DATA_QUALITY--LED--org.md2k.motionsense--MOTION_SENSE_HRV--RIGHT_WRIST"
+  ibl5: "DATA_QUALITY--LED--org.md2k.motionsense--MOTION_SENSE_HRV--LEFT_WRIST"
+  ibl6: "LED--org.md2k.motionsense--MOTION_SENSE_HRV--RIGHT_WRIST"
+  ibl7: "LED--org.md2k.motionsense--MOTION_SENSE_HRV--LEFT_WRIST"
+  ibl8: "ACCELEROMETER--org.md2k.phonesensor--PHONE"
+  ibl9: "GYROSCOPE--org.md2k.phonesensor--PHONE"
+  ibl10: "DATA_QUALITY--ECG--org.md2k.autosenseble--AUTOSENSE_BLE--CHEST"
+  ibl11: "BATTERY--org.md2k.autosense"
+  ibl12: "ECG--org.md2k.autosense"
+  ibl13: "RIP--org.md2k.autosense"
+  ibl14: "ACCELEROMETER-X--org.md2k.autosense"
+  ibl15: "ACCELEROMETER-Y--org.md2k.autosense"
+  ibl16: "ACCELEROMETER-Z--org.md2k.autosense"
+  ibl17: "GYRO--org.md2k.autosense"
+  ibl18: "AMBIENT_TEMPERATURE--org.md2k.phonesensor--PHONE"
+  ibl19: "BATTERY--org.md2k.autosenseble--AUTOSENSE_BLE--CHEST"
+  ibl20: "ACCELEROMETER--org.md2k.autosenseble--AUTOSENSE_BLE--CHEST"
+  ibl21: "RESPIRATION_BASELINE--org.md2k.autosenseble--AUTOSENSE_BLE--CHEST"
+  ibl22: "ECG--org.md2k.autosenseble--AUTOSENSE_BLE--CHEST"
+  ibl23: "RAW--org.md2k.autosenseble--AUTOSENSE_BLE--CHEST"
+  ibl24: "RESPIRATION--org.md2k.autosenseble--AUTOSENSE_BLE--CHEST"
+  ibl25: "SEQUENCE_NUMBER--org.md2k.autosenseble--AUTOSENSE_BLE--CHEST"
+  ibl26: "DATA_QUALITY--ACCELEROMETER--org.md2k.autosenseble--AUTOSENSE_BLE--CHEST"
+  ibl27: "DATA_QUALITY--RESPIRATION--org.md2k.autosenseble--AUTOSENSE_BLE--CHEST"
+  ibl28: "DATA_QUALITY--LED--org.md2k.motionsense--MOTION_SENSE_HRV--LEFT_WRIST"
+  ibl29: "DATA_QUALITY--LED--org.md2k.motionsense--MOTION_SENSE_HRV--RIGHT_WRIST"
+  ibl30: "CU_AUDIO_INFERENCE--edu.dartmouth.eureka"
+  ibl31: "CU_AUDIO_FEATURE--edu.dartmouth.eureka"
+  ibl32: "CU_AUDIO_ENERGY--edu.dartmouth.eureka"
+  ibl33: "LOCATION--org.md2k.phonesensor--PHONE"
+  ibl34: "PROXIMITY--org.md2k.phonesensor--PHONE"
+  ibl35: "DATA_QUALITY--ACCELEROMETER--org.md2k.motionsense--MOTION_SENSE_HRV--LEFT_WRIST"
+  ibl36: "BATTERY--org.md2k.phonesensor--PHONE"
+  ibl37: "DATA_QUALITY--ACCELEROMETER--org.md2k.motionsense--MOTION_SENSE_HRV--RIGHT_WRIST"
+  ibl38: "BATTERY--org.md2k.motionsense--MOTION_SENSE_HRV--LEFT_WRIST"
+  ibl39: "BATTERY--org.md2k.motionsense--MOTION_SENSE_HRV--RIGHT_WRIST"
+  ibl40: "GYROSCOPE--org.md2k.motionsense--MOTION_SENSE_HRV--RIGHT_WRIST"
+  ibl41: "SEQUENCE_NUMBER--org.md2k.motionsense--MOTION_SENSE_HRV--LEFT_WRIST"
+  ibl42: "ACCELEROMETER--org.md2k.motionsense--MOTION_SENSE_HRV--LEFT_WRIST"
+  ibl43: "LED--org.md2k.motionsense--MOTION_SENSE_HRV--LEFT_WRIST"
+  ibl44: "RAW--org.md2k.motionsense--MOTION_SENSE_HRV--LEFT_WRIST"
+  ibl45: "PRESSURE--org.md2k.phonesensor--PHONE"
+  ibl46: "ACCELEROMETER--org.md2k.motionsense--MOTION_SENSE_HRV--RIGHT_WRIST"
+  ibl47: "AMBIENT_LIGHT--org.md2k.phonesensor--PHONE"
+  ibl48: "GYROSCOPE--org.md2k.motionsense--MOTION_SENSE_HRV--LEFT_WRIST"
+  ibl49: "RAW--org.md2k.motionsense--MOTION_SENSE_HRV--RIGHT_WRIST"
+  ibl50: "GYROSCOPE--org.md2k.phonesensor--PHONE"
+  ibl51: "SEQUENCE_NUMBER--org.md2k.motionsense--MOTION_SENSE_HRV--RIGHT_WRIST"
+  ibl52: "ACCELEROMETER--org.md2k.phonesensor--PHONE"
+  ibl53: "LED--org.md2k.motionsense--MOTION_SENSE_HRV--RIGHT_WRIST"
+  ibl54: "ACCELEROMETER--org.md2k.motionsense--MOTION_SENSE_HRV--RIGHT_WRIST"
+
+
+#########################################################################
+########################### KAFKA Config ################################
+#########################################################################
+kafkaserver:
+  host: 127.0.0.1
+  port: 9092
+#########################################################################
+################ CerebralCortex API SERVER Config #######################
+#########################################################################
+
+apiserver:
+  host: 0.0.0.0
+  port: 8088
+  secret_key: 'super-secret'
+  token_expire_time: 40000 #seconds
+  debug: True
+
+routes:
+  auth: "auth"
+  stream: "stream"
+  object: "object"
+
+
+#########################################################################
+###################### DATA REPLAY CONFIGS ##############################
+#########################################################################
+data_replay:
+  replay_type: "mydb" # acceptable parameters are filez OR mydb
+  data_dir: "/home/ali/Desktop/demo/CerebralCortex-Vagrant/data/raw/"
+
+users:
+  uuids: "" # if no UUID specified then all users data will be replayed
+
+blacklist: #only works for "mydb" replay_type
+  regzex:
+    re1: '^BEACON--org.md2k.beacon--BEACON--([0-9A-F]+:){5}[0-9A-F]+$' # mysql supported regex only
+  txt_match:
+    tm1: 'RAW--org.md2k.%' #partial string matching, multiple are allowed
