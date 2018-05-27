@@ -38,25 +38,6 @@ CREATE TABLE `data_replay` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `data_replay_md2k2`
---
-
-DROP TABLE IF EXISTS `data_replay_md2k2`;
-CREATE TABLE `data_replay_md2k2` (
-  `id` int(20) NOT NULL,
-  `owner_id` varchar(40) NOT NULL,
-  `stream_id` varchar(256) NOT NULL,
-  `stream_name` varchar(255) NOT NULL,
-  `day` varchar(12) NOT NULL,
-  `files_list` json NOT NULL,
-  `dir_size` int(10) NOT NULL,
-  `metadata` json NOT NULL,
-  `processed` int(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `kafka_offsets`
 --
 
@@ -122,6 +103,51 @@ CREATE TABLE `cc_cache` (
       PRIMARY KEY (`cache_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `data_replay_demo`
+--
+
+DROP TABLE IF EXISTS `data_replay_demo`;
+CREATE TABLE `data_replay_demo` (
+  `id` int(20) NOT NULL,
+  `owner_id` varchar(40) NOT NULL,
+  `stream_id` varchar(256) NOT NULL,
+  `stream_name` varchar(255) NOT NULL,
+  `day` varchar(12) NOT NULL,
+  `files_list` varchar(255) NOT NULL,
+  `dir_size` int(10) NOT NULL,
+  `metadata` json NOT NULL,
+  `processed` int(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `data_replay_demo`
+--
+ALTER TABLE `data_replay_demo`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `files_list` (`files_list`),
+  ADD KEY `owner_id` (`owner_id`),
+  ADD KEY `stream_id` (`stream_id`),
+  ADD KEY `stream_name` (`stream_name`),
+  ADD KEY `day` (`day`),
+  ADD KEY `files_list_2` (`files_list`),
+  ADD KEY `processed` (`processed`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `data_replay_demo`
+--
+ALTER TABLE `data_replay_demo`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
 --
 -- Dumping data for table `user`
 --
@@ -137,15 +163,8 @@ INSERT INTO `user` (`identifier`, `username`, `password`, `token`, `token_issued
 -- Indexes for table `data_replay`
 --
 ALTER TABLE `data_replay`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `owner_id` (`owner_id`,`stream_id`,`day`);
+  ADD UNIQUE KEY `owner_id` (`owner_id`,`stream_id`,`day`, `files_list`);
 
---
--- Indexes for table `data_replay_md2k2`
---
-ALTER TABLE `data_replay_md2k2`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `owner_id` (`owner_id`,`stream_id`,`day`);
 
 --
 -- Indexes for table `kafka_offsets`
@@ -181,11 +200,7 @@ ALTER TABLE `user`
 --
 ALTER TABLE `data_replay`
   MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `data_replay_md2k2`
---
-ALTER TABLE `data_replay_md2k2`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `kafka_offsets`
 --
