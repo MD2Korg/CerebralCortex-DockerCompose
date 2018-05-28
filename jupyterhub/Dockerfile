@@ -62,7 +62,7 @@ COPY pyspark/kernel.json /opt/conda/share/jupyter/kernels/pyspark/
 
 RUN useradd -m md2k && echo "md2k:md2k" | chpasswd
 
-RUN cd /home/md2k
+RUN cd /home/md2k \
     && git clone https://github.com/MD2Korg/CerebralCortex-DataAnalysis  \
     && cd CerebralCortex-DataAnalysis \
     && pip3 install -r requirements.txt \
