@@ -38,9 +38,9 @@ services:
       - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:%(http_port)s/grafana/
       # - GF_INSTALL_PLUGINS=raintank-worldping-app,grafana-clock-panel,grafana-simple-json-datasource
     volumes:
-      - timeseries-storage:/var/lib/grafana
+#      - /vagrant_data/grafana/var/lib/grafana:/var/lib/grafana
       - /vagrant_data/grafana/provisioning:/etc/grafana/provisioning
-      # - timeseries-storage:/etc/grafana
+#      - /vagrant_data/grafana/etc/grafana:/etc/grafana
 
   influxdb:
     image: "influxdb:alpine"
