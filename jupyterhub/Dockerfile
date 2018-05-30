@@ -56,7 +56,6 @@ RUN git clone https://github.com/MD2Korg/CerebralCortex -b 2.2.2 \
 RUN git clone https://github.com/MD2Korg/CerebralCortex-DataAnalysis  \
     && cd CerebralCortex-DataAnalysis \
     && pip3 install -r requirements.txt \
-    && chown -R md2k . \
     && cd .. && rm -rf CerebralCortex-DataAnalysis
 
 
