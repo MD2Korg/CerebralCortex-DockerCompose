@@ -129,6 +129,7 @@ services:
 volumes:
   object-storage:
   metadata-storage:
+  data-storage:
   temp-storage:
   timeseries-storage:
   user-storage:
