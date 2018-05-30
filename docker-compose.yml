@@ -22,38 +22,8 @@ services:
       - "443:443"
       - "80:80"
     links:
-      - apiserver
       - grafana
       - jupyter
-
-  apiserver:
-    build: "../CerebralCortex-APIServer"
-    container_name: md2k-api-server
-    restart: always
-    expose:
-      - 80
-    links:
-      - mysql
-      - kafka
-      - minio
-    depends_on:
-      - mysql
-    environment:
-      - MINIO_HOST=${MINIO_HOST:-minio}
-      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-ZngmrLWgbSfZUvgocyeH}
-      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
-      - MYSQL_HOST=${MYSQL:-mysql}
-      - MYSQL_DB_USER=${MYSQL_ROOT_USER:-root}
-      - MYSQL_DB_PASS=${MYSQL_ROOT_PASSWORD:-pass}
-      - KAFKA_HOST=${KAFKA_HOST:-kafka}
-      - JWT_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
-      - FLASK_HOST=${FLASK_HOST:-0.0.0.0}
-      - FLASK_PORT=${FLASK_PORT:-80}
-      - FLASK_DEBUG=${FLASK_DEBUG:-False}
-    volumes:
-      - ./data:/data
-      - ./cc_config_file:/cc_config_file
-      - ./merebrum_config:/merebrum_config
 
 # Data vizualizations
   grafana:
