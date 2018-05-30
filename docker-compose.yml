@@ -39,7 +39,6 @@ services:
       # - GF_INSTALL_PLUGINS=raintank-worldping-app,grafana-clock-panel,grafana-simple-json-datasource
     volumes:
       - timeseries-storage:/var/lib/grafana
-      - /vagrant_data/grafana/provisioning:/etc/grafana/provisioning
       # - timeseries-storage:/etc/grafana
 
   influxdb:
@@ -50,9 +49,8 @@ services:
       - "8086:8086"
     volumes:
       - timeseries-storage:/var/lib/influxdb
-    environment:
-      - INFLUXDB_DB=cerebralcortex_raw
-
+    entrypoint:
+          - INFLUXDB_DB="cerebralcortex_raw"
 
 # Data Science Dashboard Interface
   jupyter:
@@ -67,7 +65,8 @@ services:
       - ./jupyterhub/conf:/srv/jupyterhub/conf
       - ./cc_config_file:/home/md2k/cc_config_file
       - ./cc_demo:/home/md2k/cc_demo
-      - /vagrant_data/processed:/vagrant_data/processed
+      - /home/vagrant/processed_data:/home/vagrant/processed_data/
+      - /home/vagrant/CerebralCortex-DataAnalysis:/home/md2k/CerebralCortex-DataAnalysis/
     command: jupyterhub --no-ssl --config /srv/jupyterhub/conf/jupyterhub_config.py
 
 
@@ -127,23 +126,9 @@ services:
     volumes:
       - ./minio:/export
 
-  cassandra:
-    build: ./cassandra
-    container_name: md2k-cassandra
-    restart: always
-    ports:
-      - 9160:9160 # Thrift client API
-      - 9042:9042 # CQL native transport
-    environment:
-      - CASSANDRA_CLUSTER_NAME=cerebralcortex
-    volumes:
-      - data-storage:/var/lib/cassandra
-
-
 volumes:
   object-storage:
   metadata-storage:
-  data-storage:
   temp-storage:
   timeseries-storage:
   user-storage:

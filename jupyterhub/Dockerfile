@@ -66,7 +66,8 @@ RUN cd /home/md2k \
     && git clone https://github.com/MD2Korg/CerebralCortex-DataAnalysis  \
     && cd CerebralCortex-DataAnalysis \
     && pip3 install -r requirements.txt \
-    && chown -R md2k .
+    && chown -R md2k . \
+    && cd .. && rm -rf CerebralCortex-DataAnalysis
 
 RUN pip3 install matplotlib
 VOLUME /srv/jupyterhub/conf
