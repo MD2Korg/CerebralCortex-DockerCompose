@@ -153,4 +153,7 @@ blacklist: #only works for "mydb" replay_type
   txt_match:
     tm1: 'RAW--org.md2k.%' #partial string matching, multiple are allowed
 
+cachepaths:
+  googleplaces: '/home/vagrant/places_query_cache.pickle'
+
 
