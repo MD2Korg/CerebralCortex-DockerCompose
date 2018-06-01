@@ -64,10 +64,10 @@ services:
       TINI_SUBREAPER: 'true'
     volumes:
       - ./jupyterhub/conf:/srv/jupyterhub/conf
-      - ./cc_config_file:/home/md2k/cc_config_file
-      - ./cc_demo:/home/md2k/cc_demo
+      - ./cc_config_file:/home/admin/cc_config_file
+      - ./cc_demo:/home/admin/cc_demo
       - /vagrant_data/processed/:/vagrant_data/processed/
-      - /home/vagrant/CerebralCortex-DataAnalysis:/home/md2k/CerebralCortex-DataAnalysis/
+      - /home/vagrant/CerebralCortex-DataAnalysis:/home/admin/CerebralCortex-DataAnalysis/
     command: jupyterhub --no-ssl --config /srv/jupyterhub/conf/jupyterhub_config.py
 
 
