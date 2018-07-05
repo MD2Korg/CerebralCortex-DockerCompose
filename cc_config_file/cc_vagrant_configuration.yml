@@ -45,16 +45,19 @@ mysql:
   study_table: study
 
 minio:
-  host: minio
+  host: minio # for aws (s3.amazonaws.com)
   port: 9000
   access_key: 'ZngmrLWgbSfZUvgocyeH'
   secret_key: 'IwUnI5w0f5Hf1v2qVwcr'
+  input_bucket_name: 'cerebralcortex-mperf' # required for aws-s3
+  output_bucket_name: 'cerebralcortex-mperf' # required for aws-s3
+  dir_prefix: 'cerebralcortex/data/'
   secure: False #ssl
 
 data_ingestion:
   influxdb_in: False
   nosql_in: True
-  nosql_store: "filesystem" # acceptable parameters are: cassandra, scylladb, hdfs, filesystem
+  nosql_store: "filesystem" # acceptable parameters are: cassandra, scylladb, hdfs, filesystem, aws_s3
   filesystem_path: "/vagrant/" # in case of nosql_store=filesystem, provide directory path where data shall be stored
 
 influxdb_blacklist: # influxdb data ingestion pipeline will not process stream names defined here
