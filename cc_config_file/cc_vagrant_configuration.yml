@@ -30,7 +30,7 @@ influxdb:
   db_pass: ""
 
 mysql:
-  host: mysql
+  host: 127.0.0.1
   port: 3306
   connection_pool_name: "CC_Pool"
   connection_pool_size: 1
@@ -45,19 +45,19 @@ mysql:
   study_table: study
 
 minio:
-  host: minio # for aws (s3.amazonaws.com)
+  host: s3.amazonaws.com # for amazon pass s3.amazonaws.com and for minio simpley pass minio
   port: 9000
-  access_key: 'ZngmrLWgbSfZUvgocyeH'
-  secret_key: 'IwUnI5w0f5Hf1v2qVwcr'
+  access_key: ''
+  secret_key: ''
   input_bucket_name: 'cerebralcortex-mperf' # required for aws-s3
-  output_bucket_name: 'cerebralcortex-mperf' # required for aws-s3
+  output_bucket_name: 'cerebralcortex-mperf-output' # required for aws-s3
   dir_prefix: 'cerebralcortex/data/'
   secure: False #ssl
 
 data_ingestion:
   influxdb_in: False
   nosql_in: True
-  nosql_store: "filesystem" # acceptable parameters are: cassandra, scylladb, hdfs, filesystem, aws_s3
+  nosql_store: "aws_s3" # acceptable parameters are: cassandra, scylladb, hdfs, filesystem, aws_s3
   filesystem_path: "/vagrant/" # in case of nosql_store=filesystem, provide directory path where data shall be stored
 
 influxdb_blacklist: # influxdb data ingestion pipeline will not process stream names defined here
@@ -152,6 +152,6 @@ users:
 
 blacklist: #only works for "mydb" replay_type
   regzex:
-    re1: '^BEACON--org.md2k.beacon--BEACON--([0-9A-F]+:){5}[0-9A-F]+$' # mysql supported regex only
+    re1: '^xxxBEACON--org.md2k.beacon--BEACON--([0-9A-F]+:){5}[0-9A-F]+$' # mysql supported regex only
   txt_match:
-    tm1: 'RAW--org.md2k.%' #partial string matching, multiple are allowed
+    tm1: 'xxxRAW--org.md2k.%' #partial string matching, multiple are allowed
