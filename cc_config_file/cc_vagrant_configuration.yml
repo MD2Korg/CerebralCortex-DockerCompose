@@ -60,6 +60,54 @@ data_ingestion:
   nosql_store: "aws_s3" # acceptable parameters are: cassandra, scylladb, hdfs, filesystem, aws_s3
   filesystem_path: "/vagrant/" # in case of nosql_store=filesystem, provide directory path where data shall be stored
 
+#########################################################################
+########################### Messaging Service Config ####################
+#########################################################################
+messaging_service_type:
+  messaging_service: "kinesis" #acceptable parameters are kinesis OR kafka
+
+kafkaserver:
+  host: 127.0.0.1
+  port: 9092
+
+aws_kinesis:
+  host: "kinesis"
+  region_name: "us-east-1"
+  stream_name: "cerebralcortex"
+
+#########################################################################
+################ CerebralCortex API SERVER Config #######################
+#########################################################################
+
+apiserver:
+  host: 0.0.0.0
+  port: 8088
+  secret_key: 'super-secret'
+  token_expire_time: 40000 #seconds
+  debug: True
+
+routes:
+  auth: "auth"
+  stream: "stream"
+  object: "object"
+
+
+#########################################################################
+###################### DATA REPLAY CONFIGS ##############################
+#########################################################################
+data_replay:
+  replay_type: "mydb" # acceptable parameters are filez OR mydb
+  data_dir: "/home/vagrant/CerebralCortex-DockerCompose/data/"
+
+users:
+  uuids: "" # if no UUID specified then all users data will be replayed
+
+blacklist: #only works for "mydb" replay_type
+  regzex:
+    re1: '^xxxBEACON--org.md2k.beacon--BEACON--([0-9A-F]+:){5}[0-9A-F]+$' # mysql supported regex only
+  txt_match:
+    tm1: 'xxxRAW--org.md2k.%' #partial string matching, multiple are allowed
+
 influxdb_blacklist: # influxdb data ingestion pipeline will not process stream names defined here
   ibl1: "ACCELEROMETER--org.md2k.motionsense--MOTION_SENSE_HRV--LEFT_WRIST"
   ibl2: "GYROSCOPE--org.md2k.motionsense--MOTION_SENSE_HRV--RIGHT_WRIST"
@@ -115,43 +163,3 @@ influxdb_blacklist: # influxdb data ingestion pipeline will not process stream n
   ibl52: "ACCELEROMETER--org.md2k.phonesensor--PHONE"
   ibl53: "LED--org.md2k.motionsense--MOTION_SENSE_HRV--RIGHT_WRIST"
   ibl54: "ACCELEROMETER--org.md2k.motionsense--MOTION_SENSE_HRV--RIGHT_WRIST"
-
-
-#########################################################################
-########################### KAFKA Config ################################
-#########################################################################
-kafkaserver:
-  host: 127.0.0.1
-  port: 9092
-#########################################################################
-################ CerebralCortex API SERVER Config #######################
-#########################################################################
-
-apiserver:
-  host: 0.0.0.0
-  port: 8088
-  secret_key: 'super-secret'
-  token_expire_time: 40000 #seconds
-  debug: True
-
-routes:
-  auth: "auth"
-  stream: "stream"
-  object: "object"
-
-
-#########################################################################
-###################### DATA REPLAY CONFIGS ##############################
-#########################################################################
-data_replay:
-  replay_type: "mydb" # acceptable parameters are filez OR mydb
-  data_dir: "/home/vagrant/CerebralCortex-DockerCompose/data/"
-
-users:
-  uuids: "" # if no UUID specified then all users data will be replayed
-
-blacklist: #only works for "mydb" replay_type
-  regzex:
-    re1: '^xxxBEACON--org.md2k.beacon--BEACON--([0-9A-F]+:){5}[0-9A-F]+$' # mysql supported regex only
-  txt_match:
-    tm1: 'xxxRAW--org.md2k.%' #partial string matching, multiple are allowed
