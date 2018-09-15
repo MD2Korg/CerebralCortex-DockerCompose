@@ -24,6 +24,7 @@ services:
     links:
       - grafana
       - jupyter
+      - dashboardserver
 
 # Data vizualizations
   grafana:
@@ -59,6 +60,9 @@ services:
     container_name: md2k-jupyterhub
     ports:
       - 8000
+    links:
+      - chronix
+      - dashboardserver
     restart: always
     environment:
       TINI_SUBREAPER: 'true'
@@ -68,8 +72,27 @@ services:
       - ./cc_demo:/home/admin/cc_demo
       - /vagrant_data/processed/:/vagrant_data/processed/
       - /home/vagrant/CerebralCortex-DataAnalysis:/home/admin/CerebralCortex-DataAnalysis/
+      - ./discovery_dashboard:/home/admin/discovery_dashboard
     command: jupyterhub --no-ssl --config /srv/jupyterhub/conf/jupyterhub_config.py
 
+# Discovery Dashboard
+  chronix:
+    image: poloclub/chronix-md2k
+    container_name: md2k-dashboard-chronix
+    ports:
+      - "8983:8983"
+    volumes: 
+      - chronix_data:/opt/solr/server/solr/mycores/chronix/data
+
+  dashboardserver:
+    image: poloclub/mhealth-dashboard
+    container_name: md2k-dashboard-server
+    links:
+      - chronix
+    ports: 
+      - "4567:4567"
+    volumes:
+      - mhealth_dashboard_config:/mhealth-config
 
 
 # Cerebral Cortex backend
@@ -135,3 +158,5 @@ volumes:
   timeseries-storage:
   user-storage:
   log-storage:
+  chronix_data:
+  mhealth_dashboard_config:
